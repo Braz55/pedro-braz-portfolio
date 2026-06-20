@@ -166,6 +166,7 @@ function ScrollReveal({ children, className = "", delay = "" }: ScrollRevealProp
 function App() {
   const [copied, setCopied] = useState(false)
   const [activeFilter, setActiveFilter] = useState("Todos")
+  const [activeView, setActiveView] = useState<"projects" | "curriculum">("projects")
   
   // Carousel States
   const [projectIndex, setProjectIndex] = useState(0)
@@ -177,6 +178,16 @@ function App() {
     navigator.clipboard.writeText("pm7703125@gmail.com")
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  const navigateToView = (view: "projects" | "curriculum", elementId: string) => {
+    setActiveView(view)
+    setTimeout(() => {
+      const element = document.getElementById(elementId)
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" })
+      }
+    }, 50)
   }
 
   // Filter Categories
@@ -263,16 +274,52 @@ function App() {
       {/* Header Navigation */}
       <nav className="sticky top-0 z-50 glass-navbar px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <a href="#hero" className="flex items-center gap-2.5 font-display font-bold text-xl tracking-tight text-white group">
+          <button 
+            onClick={() => navigateToView("projects", "hero")}
+            className="flex items-center gap-2.5 font-display font-bold text-xl tracking-tight text-white group cursor-pointer bg-transparent border-none"
+          >
             <Terminal className="w-5 h-5 text-indigo-400 group-hover:rotate-6 transition-transform" />
             <span>pedro<span className="text-indigo-400">.braz</span>()</span>
-          </a>
+          </button>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <a href="#about" className="hover:text-white transition-colors text-slate-400">Sobre</a>
-            <a href="#skills" className="hover:text-white transition-colors text-slate-400">Competências</a>
-            <a href="#projects" className="hover:text-white transition-colors text-slate-400">Projetos</a>
-            <a href="#education" className="hover:text-white transition-colors text-slate-400">Educação</a>
-            <a href="#contact" className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-0.5 transition-all">Contacto</a>
+            <button 
+              onClick={() => navigateToView("curriculum", "about")}
+              className={`hover:text-white transition-colors cursor-pointer bg-transparent border-none ${
+                activeView === "curriculum" ? "text-indigo-400 font-semibold" : "text-slate-400"
+              }`}
+            >
+              Sobre
+            </button>
+            <button 
+              onClick={() => navigateToView("curriculum", "skills")}
+              className={`hover:text-white transition-colors cursor-pointer bg-transparent border-none ${
+                activeView === "curriculum" ? "text-indigo-400 font-semibold" : "text-slate-400"
+              }`}
+            >
+              Competências
+            </button>
+            <button 
+              onClick={() => navigateToView("projects", "projects")}
+              className={`hover:text-white transition-colors cursor-pointer bg-transparent border-none ${
+                activeView === "projects" ? "text-indigo-400 font-semibold" : "text-slate-400"
+              }`}
+            >
+              Projetos
+            </button>
+            <button 
+              onClick={() => navigateToView("curriculum", "education")}
+              className={`hover:text-white transition-colors cursor-pointer bg-transparent border-none ${
+                activeView === "curriculum" ? "text-indigo-400 font-semibold" : "text-slate-400"
+              }`}
+            >
+              Educação
+            </button>
+            <button 
+              onClick={() => navigateToView(activeView, "contact")}
+              className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-0.5 transition-all cursor-pointer border-none"
+            >
+              Contacto
+            </button>
           </div>
         </div>
       </nav>
@@ -302,19 +349,19 @@ function App() {
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-in-up-premium animation-delay-450 w-full sm:w-auto">
-              <a 
-                href="#projects" 
-                className="px-6 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:-translate-y-1 transition-all flex items-center gap-2 justify-center w-full sm:w-auto"
+              <button 
+                onClick={() => navigateToView("projects", "projects")}
+                className="px-6 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:-translate-y-1 transition-all flex items-center gap-2 justify-center w-full sm:w-auto cursor-pointer border-none"
               >
                 <span>Explorar Projetos</span>
                 <ChevronRight className="w-4 h-4" />
-              </a>
-              <a 
-                href="#contact" 
-                className="px-6 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-semibold hover:-translate-y-1 transition-all justify-center w-full sm:w-auto text-center"
+              </button>
+              <button 
+                onClick={() => navigateToView("curriculum", "about")}
+                className="px-6 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-semibold hover:-translate-y-1 transition-all justify-center w-full sm:w-auto text-center cursor-pointer"
               >
-                Entrar em Contacto
-              </a>
+                Ver Currículo Académico
+              </button>
             </div>
           </div>
 
@@ -411,8 +458,38 @@ function App() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="relative py-20 px-6 max-w-6xl mx-auto z-10 scroll-mt-20">
+      {/* View Selector (Segmented Control) */}
+      <div className="max-w-md mx-auto mb-8 px-6 z-20 relative animate-fade-in-up-premium animation-delay-800">
+        <div className="p-1.5 bg-slate-950/80 border border-slate-800/80 rounded-2xl flex items-center shadow-2xl backdrop-blur-md">
+          <button 
+            onClick={() => navigateToView("projects", "projects")}
+            className={`flex-1 py-3 px-4 rounded-xl font-display font-bold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 border-none ${
+              activeView === "projects"
+                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/35"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <Sparkles className="w-4.5 h-4.5" />
+            Projetos de Destaque
+          </button>
+          <button 
+            onClick={() => navigateToView("curriculum", "about")}
+            className={`flex-1 py-3 px-4 rounded-xl font-display font-bold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 border-none ${
+              activeView === "curriculum"
+                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/35"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <BookOpen className="w-4.5 h-4.5" />
+            Currículo Profissional
+          </button>
+        </div>
+      </div>
+
+      {activeView === "curriculum" && (
+        <>
+          {/* About Section */}
+          <section id="about" className="relative py-20 px-6 max-w-6xl mx-auto z-10 scroll-mt-20">
         <ScrollReveal>
           <div className="glass-card p-8 md:p-14 rounded-3xl relative overflow-hidden">
             {/* Ambient blur lighting */}
@@ -479,9 +556,12 @@ function App() {
           </div>
         </ScrollReveal>
       </section>
+        </>
+      )}
 
-      {/* Projects Showcase Carousel Section */}
-      <section id="projects" className="relative py-20 px-6 max-w-6xl mx-auto z-10 scroll-mt-20">
+      {activeView === "projects" && (
+        /* Projects Showcase Carousel Section */
+        <section id="projects" className="relative py-20 px-6 max-w-6xl mx-auto z-10 scroll-mt-20">
         <ScrollReveal>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="text-left">
@@ -744,9 +824,11 @@ function App() {
           </div>
         )}
       </section>
+      )}
 
-      {/* Education Timeline Section */}
-      <section id="education" className="relative py-20 px-6 max-w-4xl mx-auto z-10 scroll-mt-20">
+      {activeView === "curriculum" && (
+        /* Education Timeline Section */
+        <section id="education" className="relative py-20 px-6 max-w-4xl mx-auto z-10 scroll-mt-20">
         <ScrollReveal>
           <div className="text-center mb-16">
             <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">
@@ -788,6 +870,7 @@ function App() {
           </div>
         </ScrollReveal>
       </section>
+      )}
 
       {/* Contact Section */}
       <section id="contact" className="relative py-20 px-6 max-w-4xl mx-auto z-10 scroll-mt-20">
