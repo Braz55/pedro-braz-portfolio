@@ -132,7 +132,7 @@ const skillCategories = [
 
 export default function App() {
   const [copied, setCopied] = useState(false)
-  const [lightboxImg, setLightboxImg] = useState<string | null>(null)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
   
   // Navigation Tabs: 'projetos' or 'curriculo'
   const [activeTab, setActiveTab] = useState<'projetos' | 'curriculo'>('projetos')
@@ -407,7 +407,7 @@ export default function App() {
               
               {!isPageInsideSheet && (
                 <button 
-                  onClick={() => setLightboxImg(activeImg)}
+                  onClick={() => setLightboxOpen(true)}
                   className="absolute inset-0 w-full h-full z-20 cursor-zoom-in"
                   title="Ver screenshot ampliado"
                 />
@@ -421,7 +421,7 @@ export default function App() {
               <div className="w-2" />
             ) : (
               <button 
-                onClick={() => setLightboxImg(activeImg)}
+                onClick={() => setLightboxOpen(true)}
                 className="retro-btn text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 font-mono"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
@@ -714,8 +714,8 @@ export default function App() {
         <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
           
           {/* Custom Manga speech bubble */}
-          <div className="mb-4 speech-bubble-manga lg:speech-bubble-left p-4 max-w-xl lg:max-w-2xl shadow-[2px_2px_0px_#2C2C35] border-2 border-manga-text bg-white">
-            <div className="absolute -top-3 left-4 px-2 py-0.5 bg-manga-text text-[8px] font-mono rounded tracking-widest uppercase">
+          <div className="mb-4 speech-bubble-manga lg:speech-bubble-left p-4 max-w-xl lg:max-w-2xl shadow-[2px_2px_0px_#2C2C35] border-2 border-manga-text bg-white relative">
+            <div className="absolute -top-3 left-4 px-2 py-0.5 bg-manga-text text-white text-[8px] font-mono rounded tracking-widest uppercase">
               STATUS: LEITURA 3D
             </div>
             <p className="font-sans text-xs md:text-sm leading-relaxed text-manga-text font-medium">
@@ -983,31 +983,79 @@ export default function App() {
       </main>
 
       {/* 4. LIGHTBOX COMPONENT FOR PREVIEW */}
-      {lightboxImg && (
+      {/* 4. LIGHTBOX COMPONENT FOR PREVIEW */}
+      {lightboxOpen && (
         <div 
-          onClick={() => setLightboxImg(null)}
+          onClick={() => setLightboxOpen(false)}
           className="fixed inset-0 z-50 bg-[#2C2C35]/95 flex flex-col items-center justify-center p-4 cursor-zoom-out select-none"
         >
           {/* Close button */}
           <button 
-            onClick={() => setLightboxImg(null)}
-            className="absolute top-6 right-6 retro-btn p-2 rounded-full cursor-pointer hover:scale-105 transition-transform"
+            onClick={() => setLightboxOpen(false)}
+            className="absolute top-6 right-6 retro-btn p-2 rounded-full cursor-pointer hover:scale-105 transition-transform z-50"
           >
             <X className="w-6 h-6" />
           </button>
+
+          {/* Left/Right Lightbox Navigation Arrows */}
+          {projects[currentProjectIndex].images.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  const p = projects[currentProjectIndex]
+                  setCurrentImageIndex((prev) => (prev - 1 + p.images.length) % p.images.length)
+                }}
+                className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 retro-btn w-11 h-11 rounded-full flex items-center justify-center text-lg z-50 font-bold bg-white"
+                title="Imagem Anterior"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  const p = projects[currentProjectIndex]
+                  setCurrentImageIndex((prev) => (prev + 1) % p.images.length)
+                }}
+                className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 retro-btn w-11 h-11 rounded-full flex items-center justify-center text-lg z-50 font-bold bg-white"
+                title="Próxima Imagem"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </>
+          )}
           
           {/* Framed preview panel */}
-          <div className="relative max-w-full max-h-[85vh] p-2.5 bg-white border-4 border-manga-text shadow-[8px_8px_0px_#2C2C35] rounded-2xl">
+          <div className="relative max-w-full max-h-[85vh] p-2.5 bg-white border-4 border-manga-text shadow-[8px_8px_0px_#2C2C35] rounded-2xl flex flex-col items-center">
             <img 
-              src={lightboxImg} 
+              src={projects[currentProjectIndex].images[currentImageIndex]} 
               alt="Ampliação do Painel" 
-              className="max-w-full max-h-[75vh] object-contain rounded-xl border border-manga-text/20"
+              className="max-w-full max-h-[60vh] object-contain rounded-xl border border-manga-text/20"
+              onClick={(e) => e.stopPropagation()}
             />
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-manga-text text-white border-2 border-white text-xs font-mono px-4 py-1 rounded-full uppercase tracking-wider">
-              Manga Panel Snapshot
-            </div>
             
-            <div className="mt-2.5 text-center text-xs font-hand text-manga-text/50 font-bold">
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-manga-text text-white border-2 border-white text-xs font-mono px-4 py-1 rounded-full uppercase tracking-wider whitespace-nowrap">
+              Manga Panel {currentImageIndex + 1} de {projects[currentProjectIndex].images.length}
+            </div>
+
+            {/* Thumbnails filmstrip inside lightbox framed container */}
+            {projects[currentProjectIndex].images.length > 1 && (
+              <div className="flex gap-2 mt-3.5 justify-center select-none" onClick={(e) => e.stopPropagation()}>
+                {projects[currentProjectIndex].images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    className={`w-12 h-8 rounded-md border-2 overflow-hidden transition-all cursor-pointer ${
+                      currentImageIndex === idx ? 'border-manga-accent-red scale-105 shadow-[2px_2px_0px_#2C2C35]' : 'border-manga-text/30 hover:border-manga-text'
+                    }`}
+                  >
+                    <img src={img} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
+            
+            <div className="mt-2 text-center text-[10px] font-hand text-manga-text/50 font-bold">
               (Clica fora ou no botão X para fechar a visualização)
             </div>
           </div>
