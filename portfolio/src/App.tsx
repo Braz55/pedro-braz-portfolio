@@ -59,6 +59,7 @@ const projects = [
       "/image/otaku_time/3.png",
       "/image/otaku_time/4.jpeg"
     ],
+    githubUrl: "https://github.com/Braz55/Otaku-Time-v2",
     icon: <Terminal className="w-5 h-5 text-manga-text" />,
     speech: "O ecossistema definitivo para gerir os meus animes e mangas favoritos!",
     chapter: "Capítulo 2: Rede Social de Anime"
@@ -98,6 +99,7 @@ const projects = [
       "/image/neondrive/2.png",
       "/image/neondrive/3.png"
     ],
+    githubUrl: "https://github.com/liane04/CG_tron",
     icon: <Gamepad2 className="w-5 h-5 text-manga-text" />,
     speech: "Computação gráfica fluida baseada em álgebra linear e matrizes 3D!",
     chapter: "Capítulo 4: Álgebra Linear Visual"
@@ -153,125 +155,6 @@ export default function App() {
     navigator.clipboard.writeText("pm7703125@gmail.com")
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
-  }
-
-  const downloadLaTeX = () => {
-    const latexCode = `\\documentclass[11pt,a4paper]{article}
-
-\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
-\\usepackage[portuguese]{babel}
-\\usepackage[margin=1.5cm]{geometry} 
-\\usepackage{hyperref}
-\\usepackage{enumitem}
-\\usepackage{titlesec}
-\\usepackage{xcolor}
-
-% Cores Executivas e Tecnológicas
-\\definecolor{primaryColor}{HTML}{1A252F}   % Azul Escuro / Antracite
-\\definecolor{accentColor}{HTML}{2980B9}    % Azul de Destaque
-\\definecolor{textColor}{HTML}{2C3E50}      % Cinza Escuro para Leitura
-\\definecolor{dateColor}{HTML}{7F8C8D}      % Cinza para Datas
-
-\\hypersetup{
-    colorlinks=true,
-    urlcolor=accentColor,
-    pdftitle={Curriculum Vitae - Pedro Braz},
-}
-
-% Estilo de Secção com Barra Lateral Azul Elegante
-\\titleformat{\\section}{\\large\\bfseries\\color{primaryColor}\\uppercase}{}{0em}{}
-\\titlespacing{\\section}{0pt}{12pt}{6pt}
-\\definecolor{accentColor}{RGB}{0,120,215} % Define accentColor (change RGB values as desired)
-\\definecolor{ACCENTCOLOR}{RGB}{0,120,215} % Alias for compatibility
-
-\\newcommand{\\sectiondivider}[1]{%
-    \\section*{\\hspace{-4pt}\\color{accentColor}{\\vrule width 4pt height 11pt depth 2pt}\\hspace{6pt}#1}%
-}
-
-\\pagestyle{empty}
-
-\\begin{document}
-
-% --- CABEÇALHO ---
-\\begin{center}
-    {\\Huge \\textbf{\\color{primaryColor} Pedro Braz}} \\\\ \\vspace{6pt}
-    \\small \\color{textColor} Mirandela, Portugal \\\\ \\vspace{2pt}
-    \\href{mailto:pm7703125@gmail.com}{pm7703125@gmail.com} $\\vert$ 
-    +351 914 271 784 $\\vert$ 
-    \\href{https://github.com/Braz55}{github.com/Braz55}
-\\end{center}
-
-% --- PERFIL ---
-\\sectiondivider{Perfil}
-\\noindent{\\color{textColor}
-Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada do ciclo de vida de desenvolvimento de software. Demonstro sólida proficiência prática em arquitetura orientada a objetos e ambientes full-stack, com foco particular nos ecossistemas TypeScript/JavaScript e C\\#. O meu percurso inclui o desenho e implementação de sistemas distribuídos e arquiteturas orientadas a eventos, programação gráfica 3D com WebGL e a modelação avançada de bases de dados relacionais (utilizando PostgreSQL e SQLite). Alinho competências analíticas em engenharia de requisitos e modelação conceptual à proatividade de gerir e alojar as minhas próprias aplicações na cloud. Procuro ingressar no Mestrado do ISEP para consolidar conhecimentos em padrões de desenho e no desenvolvimento de sistemas escaláveis e de alta qualidade.}
-
-% --- EDUCAÇÃO ---
-\\sectiondivider{Educação}
-\\noindent
-\\textbf{\\color{textColor} Universidade de Trás-os-Montes e Alto Douro (UTAD)} \\hfill {\\color{dateColor}\\small Set 2023 -- Jul 2026 (Previsão)} \\\\
-\\textit{\\color{textColor!90} Licenciatura em Engenharia Informática}
-\\begin{itemize}[noitemsep, topsep=3pt, leftmargin=12pt]
-    \\item{\\color{textColor} Desenvolvimento de competências nucleares em algoritmos, arquitetura de sistemas e engenharia de requisitos.}
-    \\item{\\color{textColor} \\textbf{Média atual:} 14 valores.}
-\\end{itemize}
-
-% --- PROJETOS ---
-\\sectiondivider{Projetos}
-
-\\noindent
-\\textbf{\\color{textColor} ProjectPilot -- Assistente de IA Documental} \\hfill {\\color{dateColor}\\small 2026} \\\\
-\\textit{\\color{textColor!80}\\small Parceria de Investigação com o INESC TEC (Repositório Privado)}
-\\begin{itemize}[noitemsep, topsep=2pt, leftmargin=12pt]
-    \\item{\\color{textColor} Desenho de uma arquitetura segura para processamento \\textit{offline} de documentação técnica, garantindo a privacidade total dos dados através da execução local de modelos de Inteligência Artificial.}
-    \\item{\\color{textColor} Implementação de um \\textit{pipeline} RAG (\\textit{Retrieval-Augmented Generation}) acoplado ao modelo \\textit{Large Language Model} (Llama 3.1) para extração semântica e respostas contextuais precisas.}
-    \\item{\\color{textColor} Integração do motor de inferência numa interface visual interativa utilizando Open WebUI, otimizando a experiência de interação do utilizador final com o sistema de IA.}
-\\end{itemize}
-\\vspace{6pt}
-
-\\noindent
-\\textbf{\\color{textColor} Otaku Time Pro -- Plataforma Full-Stack e App Mobile} \\hfill {\\color{dateColor}\\small 2026} \\\\
-\\textit{\\color{textColor!80}\\small Projeto Pessoal Autónomo}
-\\begin{itemize}[noitemsep, topsep=2pt, leftmargin=12pt]
-    \\item{\\color{textColor} Arquitetura de um ecossistema \\textit{cloud} completo utilizando \\textbf{React} (Frontend) e \\textbf{NestJS} (Backend API), com alojamento e integração contínua (CI/CD) via Render.}
-    \\item{\\color{textColor} Modelação e gestão de base de dados relacional em ambiente \\textit{cloud} (\\textbf{PostgreSQL / Neon DB}) integrada através do ORM \\textbf{Prisma}.}
-    \\item{\\color{textColor} Desenvolvimento multiplataforma garantindo uma experiência nativa em Android através do \\textbf{Capacitor}, consumindo a API centralizada para sincronização em tempo real.}
-    \\item{\\color{textColor} Integração de dados complexos através de múltiplas APIs externas (AniList, MangaUpdates) desenvolvendo algoritmos de \\textit{fallback} e \\textit{background syncing} para estabilidade da informação.}
-\\end{itemize}
-\\vspace{6pt}
-
-\\noindent
-\\textbf{\\color{textColor} Plataforma de Monitorização IoT Distribuída} \\hfill {\\color{dateColor}\\small 2026} \\\\
-\\textit{\\color{textColor!80}\\small Projeto Académico de Sistemas Distribuídos (Repositório Privado)}
-\\begin{itemize}[noitemsep, topsep=2pt, leftmargin=12pt]
-    \\item{\\color{textColor} Arquitetura e implementação de um sistema IoT assíncrono para telemetria, utilizando um modelo \\textbf{Pub/Sub} através de \\textbf{RabbitMQ} (Topic Exchanges).}
-    \\item{\\color{textColor} Desenho de uma arquitetura de microsserviços integrando componentes heterogéneos (C\\#, Python, Node.js) comunicando estritamente via \\textbf{gRPC} e \\textbf{Protocol Buffers}.}
-    \\item{\\color{textColor} Implementação de mecanismos avançados de resiliência e tolerância a falhas, incluindo \\textit{Dead-Letter Exchanges}, \\textit{Retry policies} exponenciais (\\textbf{Polly}) e \\textit{Fallbacks}.}
-    \\item{\\color{textColor} Desacoplamento da camada de dados utilizando armazenamento persistente em \\textbf{MongoDB} para o registo em tempo real de métricas ambientais.}
-\\end{itemize}
-\\vspace{6pt}
-
-% --- COMPETÊNCIAS ---
-\\sectiondivider{Competências Técnicas}
-\\noindent
-\\begin{tabular}{@{} p{4.2cm} p{12.8cm} @{}}
-    \\textbf{\\color{textColor} Linguagens:} & {\\color{textColor} C\\#, TypeScript, JavaScript, Python, C, C++, HTML5/CSS3} \\\\ [3pt]
-    \\textbf{\\color{textColor} Bases de Dados:} & {\\color{textColor} PostgreSQL, SQLite, MongoDB, Supabase} \\\\ [3pt]
-    \\textbf{\\color{textColor} Frameworks \\& APIs:} & {\\color{textColor} ASP.NET Core, gRPC, RabbitMQ, Stripe API, NestJS, React, Capacitor} \\\\ [3pt]
-    \\textbf{\\color{textColor} Ferramentas \\& Padrões:} & {\\color{textColor} Docker, CI/CD, RAG, Protocol Buffers, Distributed Systems, QA Testing} \\\\
-\\end{tabular}
-\\end{document}`;
-
-    const blob = new Blob([latexCode], { type: 'text/x-tex' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'curriculum_pedro_braz.tex'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    URL.revokeObjectURL(url)
   }
 
   // Reset inner project carousel index when active project changes
@@ -359,14 +242,14 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
   const renderProjectLeftPage = (idx: number, _isPageInsideSheet = false) => {
     const p = projects[idx]
     return (
-      <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between relative bg-white overflow-y-auto lg:overflow-visible">
+      <div className="w-full h-full p-5 lg:px-7 lg:py-6 flex flex-col justify-between relative bg-white overflow-y-auto lg:overflow-visible">
         {/* Subtle dot pattern */}
         <div className="absolute inset-0 screentone-subtle opacity-[0.15] pointer-events-none z-0" />
         
         <div className="relative z-10 flex flex-col h-full justify-between">
           <div>
             {/* Header - upgraded text size */}
-            <div className="flex justify-between items-center border-b border-manga-text/20 pb-2 mb-4">
+            <div className="flex justify-between items-center border-b border-manga-text/20 pb-1.5 mb-3">
               <div>
                 <span className="text-xs font-mono font-bold text-manga-text/60 uppercase tracking-widest block">
                   PROJETO {idx + 1} DE {projects.length}
@@ -378,7 +261,7 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
             </div>
 
             {/* Icon + Title - upgraded subtitle */}
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-3 mb-2">
               <div className="p-2.5 rounded bg-manga-bg border border-manga-text shadow-[2px_2px_0px_#2C2C35]">
                 {p.icon}
               </div>
@@ -391,9 +274,9 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
             </div>
 
             {/* Details list - upgraded from text-xs to text-sm and text color to solid ink-blue */}
-            <div className="mt-4">
-              <h4 className="text-xs font-mono font-bold text-manga-accent-blue uppercase tracking-wider mb-2">Detalhes de Engenharia:</h4>
-              <ul className="text-[13px] lg:text-sm font-sans space-y-2 text-manga-text pl-1 leading-relaxed">
+            <div className="mt-2.5">
+              <h4 className="text-xs font-mono font-bold text-manga-accent-blue uppercase tracking-wider mb-1">Detalhes de Engenharia:</h4>
+              <ul className="text-xs lg:text-[13px] font-sans space-y-1.5 text-manga-text pl-1 leading-snug">
                 {p.details.map((detail, dIdx) => (
                   <li key={dIdx} className="flex gap-2 items-start">
                     <span className="text-manga-accent-red font-bold text-base leading-none flex-shrink-0">&bull;</span>
@@ -405,20 +288,33 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
           </div>
 
           {/* Tags - upgraded from text-[9px] to text-xs */}
-          <div className="mt-4 pt-2 border-t border-manga-text/10">
-            <div className="flex flex-wrap gap-1.5">
-              {p.tags.map((tag, tIdx) => (
-                <span 
-                  key={tIdx} 
-                  className="text-xs font-mono font-bold px-2.5 py-0.5 border border-manga-text/30 bg-manga-accent-red-light text-manga-accent-red rounded"
-                >
-                  #{tag}
-                </span>
-              ))}
+          <div className="mt-3 pt-1.5 border-t border-manga-text/10 flex justify-between items-end">
+            <div>
+              <div className="flex flex-wrap gap-1.5">
+                {p.tags.map((tag, tIdx) => (
+                  <span 
+                    key={tIdx} 
+                    className="text-xs font-mono font-bold px-2.5 py-0.5 border border-manga-text/30 bg-manga-accent-red-light text-manga-accent-red rounded"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+              <div className="text-xs font-mono text-manga-text/40 mt-2.5 text-left">
+                Pág. {(idx * 2) + 1}
+              </div>
             </div>
-            <div className="text-xs font-mono text-manga-text/40 mt-3 text-left">
-              Pág. {(idx * 2) + 1}
-            </div>
+            {p.githubUrl && !_isPageInsideSheet && (
+              <a 
+                href={p.githubUrl} 
+                target="_blank" 
+                rel="noreferrer"
+                className="retro-btn text-xs px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 font-mono mb-1 bg-white"
+              >
+                <Github className="w-3.5 h-3.5" />
+                <span>Código</span>
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -546,12 +442,12 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
   const renderCurriculumLeftPage = (pageIdx: number, isPageInsideSheet = false) => {
     if (pageIdx === 0) {
       return (
-        <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
+        <div className="w-full h-full p-5 lg:px-7 lg:py-6 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
           <div className="absolute inset-0 screentone-subtle opacity-[0.12] pointer-events-none z-0" />
           <div className="relative z-10 flex flex-col h-full justify-between">
             <div>
               {/* Header - upgraded */}
-              <div className="flex justify-between items-center border-b border-manga-text/20 pb-2 mb-4">
+              <div className="flex justify-between items-center border-b border-manga-text/20 pb-1.5 mb-3">
                 <h3 className="text-lg font-bold font-sans flex items-center gap-2">
                   <BookOpen className="w-5 h-5 text-manga-accent-blue" />
                   <span>Sobre Mim</span>
@@ -562,18 +458,18 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
               </div>
 
               {/* Bio Paragraph - upgraded to full LaTeX Perfil text */}
-              <div className="text-xs lg:text-[13px] leading-relaxed text-manga-text text-justify space-y-3 mb-4 font-sans">
-                <p className="indent-4 leading-relaxed">
+              <div className="text-xs lg:text-[13px] leading-normal text-manga-text text-justify space-y-2.5 mb-3 font-sans">
+                <p className="indent-4">
                   Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada do ciclo de vida de desenvolvimento de software. Demonstro sólida proficiência prática em arquitetura orientada a objetos e ambientes full-stack, com foco particular nos ecossistemas TypeScript/JavaScript e C#.
                 </p>
-                <p className="indent-4 leading-relaxed">
+                <p className="indent-4">
                   O meu percurso inclui o desenho e implementação de sistemas distribuídos e arquiteturas orientadas a eventos, programação gráfica 3D com WebGL e a modelação avançada de bases de dados relacionais (utilizando PostgreSQL e SQLite). Alinho competências analíticas em engenharia de requisitos e modelação conceptual à proatividade de gerir e alojar as minhas próprias aplicações na cloud. Procuro ingressar no Mestrado do ISEP para consolidar conhecimentos em padrões de desenho e no desenvolvimento de sistemas escaláveis e de alta qualidade.
                 </p>
               </div>
 
               {/* UTAD education timeline - updated with LaTeX content and GPA */}
-              <div className="border-t border-manga-text/10 pt-3">
-                <h4 className="text-xs font-mono font-bold text-manga-accent-blue uppercase tracking-wider mb-2">Educação:</h4>
+              <div className="border-t border-manga-text/10 pt-2">
+                <h4 className="text-xs font-mono font-bold text-manga-accent-blue uppercase tracking-wider mb-1">Educação:</h4>
                 <div className="relative border-l border-manga-text/20 pl-4 ml-1">
                   <div className="relative">
                     <div className="absolute -left-[20.5px] top-1 w-2.5 h-2.5 rounded-full border border-manga-text bg-manga-sage" />
@@ -595,7 +491,7 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
               </div>
             </div>
             
-            <div className="text-xs font-mono text-manga-text/40 pt-3">
+            <div className="text-xs font-mono text-manga-text/40 pt-2">
               Pág. 1
             </div>
           </div>
@@ -670,12 +566,12 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
   const renderCurriculumRightPage = (pageIdx: number, _isPageInsideSheet = false) => {
     if (pageIdx === 0) {
       return (
-        <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
+        <div className="w-full h-full p-5 lg:px-7 lg:py-6 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
           <div className="absolute inset-0 screentone-subtle opacity-[0.12] pointer-events-none z-0" />
           <div className="relative z-10 flex flex-col h-full justify-between">
             <div>
               {/* Header */}
-              <div className="flex justify-between items-center border-b border-manga-text/20 pb-2 mb-4">
+              <div className="flex justify-between items-center border-b border-manga-text/20 pb-1.5 mb-3">
                 <h3 className="text-lg font-bold font-sans flex items-center gap-2">
                   <Code className="w-5 h-5 text-manga-accent-red" />
                   <span>Foco Técnico &amp; Competências</span>
@@ -686,7 +582,7 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
               </div>
 
               {/* Skill tags - updated with LaTeX content */}
-              <div className="space-y-3.5">
+              <div className="space-y-2.5">
                 {skillCategories.map((cat, idx) => (
                   <div key={idx} className="border border-manga-text/20 p-2 rounded-xl bg-manga-bg/30">
                     <div className="flex items-center gap-1.5 mb-1">
@@ -710,7 +606,7 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
               </div>
             </div>
             
-            <div className="text-xs font-mono text-manga-text/40 pt-3 text-right">
+            <div className="text-xs font-mono text-manga-text/40 pt-2 text-right">
               Pág. 2
             </div>
           </div>
@@ -871,13 +767,15 @@ Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada
               )}
             </div>
 
-            <button 
-              onClick={downloadLaTeX}
+            <a 
+              href="/curriculo/Curriculo.pdf"
+              download="Curriculo_Pedro_Braz.pdf"
               className="retro-btn px-3.5 py-1.5 text-xs flex items-center gap-1.5 rounded-lg bg-white"
+              title="Baixar Currículo em formato PDF"
             >
               <FileText className="w-3.5 h-3.5" />
-              <span>Baixar CV (LaTeX)</span>
-            </button>
+              <span>Baixar CV (PDF)</span>
+            </a>
           </div>
         </div>
       </header>
