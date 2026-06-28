@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { 
   Github, 
-  Mail, 
-  MapPin, 
+  Mail,
   Terminal, 
   Database, 
   Cpu, 
@@ -11,168 +10,144 @@ import {
   BookOpen, 
   Check, 
   Copy, 
-  ChevronRight, 
-  ChevronLeft,
-  Sparkles,
+  Sparkles, 
+  Phone, 
+  Gamepad2, 
+  Brain,
   Maximize2,
   X,
-  Gamepad2,
-  Brain,
-  Phone,
-  ArrowUpRight
+  ChevronLeft,
+  ChevronRight,
+  FileText
 } from 'lucide-react'
 
-// Define projects from LaTeX CV with associated public images
+// Projects data from Pedro Braz's CV
 const projects = [
   {
+    id: "project-pilot",
     title: "ProjectPilot",
-    subtitle: "Assistente de IA Documental",
-    type: "Parceria de Investigação com o INESC TEC (Repositório Privado)",
+    subtitle: "Parceria de Investigação com o INESC TEC (Repositório Privado)",
+    tags: ["Llama 3.1", "RAG", "Python", "Open WebUI", "Semantic Search"],
     period: "2026",
-    images: [
-      "/image/project_pilot/1.png"
-    ],
-    tags: ["Llama 3.1", "RAG", "Python", "Open WebUI", "Semantic Search", "AI Engineering"],
     details: [
       "Desenho de uma arquitetura segura para processamento offline de documentação técnica, garantindo a privacidade total dos dados através da execução local de modelos de Inteligência Artificial.",
       "Implementação de um pipeline RAG (Retrieval-Augmented Generation) acoplado ao modelo Large Language Model (Llama 3.1) para extração semântica e respostas contextuais precisas.",
       "Integração do motor de inferência numa interface visual interativa utilizando Open WebUI, otimizando a experiência de interação do utilizador final com o sistema de IA."
     ],
-    icon: <Brain className="w-8 h-8 text-purple-400" />
+    images: [
+      "/image/project_pilot/1.png"
+    ],
+    icon: <Brain className="w-5 h-5 text-manga-text" />,
+    speech: "Uma arquitetura offline ultra-segura para IA e análise semântica local!",
+    chapter: "Capítulo 1: Inteligência Artificial Local"
   },
   {
+    id: "otaku-time",
     title: "Otaku Time Pro",
-    subtitle: "Plataforma Full-Stack e App Mobile",
-    type: "Projeto Pessoal Autónomo",
+    subtitle: "Projeto Pessoal Autónomo",
+    tags: ["React", "NestJS", "Prisma", "PostgreSQL", "Capacitor", "Neon DB"],
     period: "2026",
-    images: [
-      "/image/otaku_time/1.png",
-      "/image/otaku_time/2.png",
-      "/image/otaku_time/3.png",
-      "/image/otaku_time/4.jpeg"
-    ],
-    tags: ["React", "NestJS", "Prisma", "PostgreSQL", "Capacitor", "Neon DB", "CI/CD Render"],
     details: [
       "Arquitetura de um ecossistema cloud completo utilizando React (Frontend) e NestJS (Backend API), com alojamento e integração contínua (CI/CD) via Render.",
       "Modelação e gestão de base de dados relacional em ambiente cloud (PostgreSQL / Neon DB) integrada através do ORM Prisma.",
       "Desenvolvimento multiplataforma garantindo uma experiência nativa em Android através do Capacitor, consumindo a API centralizada para sincronização em tempo real.",
       "Integração de dados complexos através de múltiplas APIs externas (AniList, MangaUpdates) desenvolvendo algoritmos de fallback e background syncing para estabilidade da informação."
     ],
-    icon: <Terminal className="w-8 h-8 text-sky-400" />
+    images: [
+      "/image/otaku_time/1.png",
+      "/image/otaku_time/2.png",
+      "/image/otaku_time/3.png",
+      "/image/otaku_time/4.jpeg"
+    ],
+    icon: <Terminal className="w-5 h-5 text-manga-text" />,
+    speech: "O ecossistema definitivo para gerir os meus animes e mangas favoritos!",
+    chapter: "Capítulo 2: Rede Social de Anime"
   },
   {
+    id: "iot-platform",
     title: "Plataforma de Monitorização IoT Distribuída",
-    subtitle: "Sistema IoT Assíncrono para Telemetria",
-    type: "Projeto Académico de Sistemas Distribuídos (Repositório Privado)",
+    subtitle: "Projeto Académico de Sistemas Distribuídos (Repositório Privado)",
+    tags: ["C#", "gRPC", "RabbitMQ", "MongoDB", "Python", "Polly Retry"],
     period: "2026",
-    images: [
-      "/image/isDistribuidos/1.png",
-      "/image/isDistribuidos/2.png",
-      "/image/isDistribuidos/3.png"
-    ],
-    tags: ["C#", "gRPC", "RabbitMQ", "MongoDB", "Python", "Node.js", "Polly Retry"],
     details: [
       "Arquitetura e implementação de um sistema IoT assíncrono para telemetria, utilizando um modelo Pub/Sub através de RabbitMQ (Topic Exchanges).",
       "Desenho de uma arquitetura de microsserviços integrando componentes heterogéneos (C#, Python, Node.js) comunicando estritamente via gRPC e Protocol Buffers.",
       "Implementação de mecanismos avançados de resiliência e tolerância a falhas, incluindo Dead-Letter Exchanges, Retry policies exponenciais (Polly) e Fallbacks.",
       "Desacoplamento da camada de dados utilizando armazenamento persistente em MongoDB para o registo em tempo real de métricas ambientais."
     ],
-    icon: <Cpu className="w-8 h-8 text-emerald-400" />
+    images: [
+      "/image/isDistribuidos/1.png",
+      "/image/isDistribuidos/2.png",
+      "/image/isDistribuidos/3.png"
+    ],
+    icon: <Cpu className="w-5 h-5 text-manga-text" />,
+    speech: "Mensagens assíncronas de alto desempenho conectando microsserviços!",
+    chapter: "Capítulo 3: Microsserviços e IoT"
   },
   {
-    title: "Aplicação Gráfica 3D Interativa",
-    subtitle: "Inspirada em Tron Light Cycles",
-    type: "Projeto de Computação Gráfica (Trabalho de Grupo)",
+    id: "neon-drive",
+    title: "Neon Drive 3D",
+    subtitle: "Simulação WebGL inspirada em Tron",
+    tags: ["WebGL", "Three.js", "JavaScript", "3D Graphics", "Vector Math"],
     period: "2026",
+    details: [
+      "Manipulação de matrizes de transformação e geometria 3D com Three.js para criar uma simulação fluida inspirada em Tron."
+    ],
     images: [
       "/image/neondrive/1.png",
       "/image/neondrive/2.png",
       "/image/neondrive/3.png"
     ],
-    tags: ["WebGL", "Three.js", "JavaScript", "3D Graphics", "Vector Math"],
-    details: [
-      "Manipulação de matrizes de transformação e primitivas geométricas recorrendo a Three.js e WebGL para criar uma simulação 3D fluida inspirada em Tron Light Cycles."
-    ],
-    icon: <Gamepad2 className="w-8 h-8 text-pink-400" />
+    icon: <Gamepad2 className="w-5 h-5 text-manga-text" />,
+    speech: "Computação gráfica fluida baseada em álgebra linear e matrizes 3D!",
+    chapter: "Capítulo 4: Álgebra Linear Visual"
   }
 ]
 
-// Skill Categories from LaTeX CV
+// Skill Categories
 const skillCategories = [
   {
     title: "Linguagens",
-    icon: <Code className="w-5 h-5 text-indigo-400" />,
+    icon: <Code className="w-4 h-4 text-manga-accent-red" />,
     skills: ["C#", "TypeScript", "JavaScript", "Python", "C", "C++", "HTML5/CSS3"]
   },
   {
     title: "Bases de Dados",
-    icon: <Database className="w-5 h-5 text-emerald-400" />,
-    skills: ["PostgreSQL", "SQLite", "MongoDB", "Supabase RLS"]
+    icon: <Database className="w-4 h-4 text-manga-accent-blue" />,
+    skills: ["PostgreSQL", "SQLite", "MongoDB", "Supabase"]
   },
   {
     title: "Frameworks & APIs",
-    icon: <Cpu className="w-5 h-5 text-purple-400" />,
+    icon: <Cpu className="w-4 h-4 text-manga-sage" />,
     skills: ["ASP.NET Core", "gRPC", "RabbitMQ", "Stripe API", "NestJS", "React", "Capacitor"]
   },
   {
     title: "Ferramentas & Padrões",
-    icon: <Wrench className="w-5 h-5 text-teal-400" />,
+    icon: <Wrench className="w-4 h-4 text-manga-yellow" />,
     skills: ["Docker", "CI/CD", "RAG", "Protocol Buffers", "Distributed Systems", "QA Testing"]
   }
 ]
 
-interface ScrollRevealProps {
-  children: React.ReactNode;
-  className?: string;
-  delay?: string;
-}
-
-function ScrollReveal({ children, className = "", delay = "" }: ScrollRevealProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          if (ref.current) {
-            observer.unobserve(ref.current)
-          }
-        }
-      },
-      { threshold: 0.05, rootMargin: "0px 0px -50px 0px" }
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
-
-  return (
-    <div
-      ref={ref}
-      className={`reveal-on-scroll ${isVisible ? 'visible' : ''} ${delay} ${className}`}
-    >
-      {children}
-    </div>
-  )
-}
-
-function App() {
+export default function App() {
   const [copied, setCopied] = useState(false)
-  const [activeFilter, setActiveFilter] = useState("Todos")
-  const [activeView, setActiveView] = useState<"projects" | "curriculum">("projects")
+  const [lightboxImg, setLightboxImg] = useState<string | null>(null)
   
-  // Carousel States
-  const [projectIndex, setProjectIndex] = useState(0)
-  const [imageIndex, setImageIndex] = useState(0)
-  const [animating, setAnimating] = useState(false)
-  const [lightboxOpen, setLightboxOpen] = useState(false)
+  // Navigation Tabs: 'projetos' or 'curriculo'
+  const [activeTab, setActiveTab] = useState<'projetos' | 'curriculo'>('projetos')
+
+  // Open Book indices and anims
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0)
+  const [oldProjectIndex, setOldProjectIndex] = useState<number | null>(null)
+
+  // Inner project screenshot carousel indices
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [oldImageIndex, setOldImageIndex] = useState(0)
+
+  const [currentCurriculumPage, setCurrentCurriculumPage] = useState(0) // 0 or 1
+  const [oldCurriculumPage, setOldCurriculumPage] = useState<number | null>(null)
+
+  const [isFlipping, setIsFlipping] = useState(false)
+  const [flipDirection, setFlipDirection] = useState<'next' | 'prev' | null>(null)
 
   const copyEmail = () => {
     navigator.clipboard.writeText("pm7703125@gmail.com")
@@ -180,851 +155,978 @@ function App() {
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const navigateToView = (view: "projects" | "curriculum", elementId: string) => {
-    setActiveView(view)
-    setTimeout(() => {
-      const element = document.getElementById(elementId)
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" })
-      }
-    }, 50)
+  const downloadLaTeX = () => {
+    const latexCode = `\\documentclass[11pt,a4paper]{article}
+
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
+\\usepackage[portuguese]{babel}
+\\usepackage[margin=1.5cm]{geometry} 
+\\usepackage{hyperref}
+\\usepackage{enumitem}
+\\usepackage{titlesec}
+\\usepackage{xcolor}
+
+% Cores Executivas e Tecnológicas
+\\definecolor{primaryColor}{HTML}{1A252F}   % Azul Escuro / Antracite
+\\definecolor{accentColor}{HTML}{2980B9}    % Azul de Destaque
+\\definecolor{textColor}{HTML}{2C3E50}      % Cinza Escuro para Leitura
+\\definecolor{dateColor}{HTML}{7F8C8D}      % Cinza para Datas
+
+\\hypersetup{
+    colorlinks=true,
+    urlcolor=accentColor,
+    pdftitle={Curriculum Vitae - Pedro Braz},
+}
+
+% Estilo de Secção com Barra Lateral Azul Elegante
+\\titleformat{\\section}{\\large\\bfseries\\color{primaryColor}\\uppercase}{}{0em}{}
+\\titlespacing{\\section}{0pt}{12pt}{6pt}
+\\definecolor{accentColor}{RGB}{0,120,215} % Define accentColor (change RGB values as desired)
+\\definecolor{ACCENTCOLOR}{RGB}{0,120,215} % Alias for compatibility
+
+\\newcommand{\\sectiondivider}[1]{%
+    \\section*{\\hspace{-4pt}\\color{accentColor}{\\vrule width 4pt height 11pt depth 2pt}\\hspace{6pt}#1}%
+}
+
+\\pagestyle{empty}
+
+\\begin{document}
+
+% --- CABEÇALHO ---
+\\begin{center}
+    {\\Huge \\textbf{\\color{primaryColor} Pedro Braz}} \\\\ \\vspace{6pt}
+    \\small \\color{textColor} Mirandela, Portugal \\\\ \\vspace{2pt}
+    \\href{mailto:pm7703125@gmail.com}{pm7703125@gmail.com} $\\vert$ 
+    +351 914 271 784 $\\vert$ 
+    \\href{https://github.com/Braz55}{github.com/Braz55}
+\\end{center}
+
+% --- PERFIL ---
+\\sectiondivider{Perfil}
+\\noindent{\\color{textColor}
+Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada do ciclo de vida de desenvolvimento de software. Demonstro sólida proficiência prática em arquitetura orientada a objetos e ambientes full-stack, com foco particular nos ecossistemas TypeScript/JavaScript e C\\#. O meu percurso inclui o desenho e implementação de sistemas distribuídos e arquiteturas orientadas a eventos, programação gráfica 3D com WebGL e a modelação avançada de bases de dados relacionais (utilizando PostgreSQL e SQLite). Alinho competências analíticas em engenharia de requisitos e modelação conceptual à proatividade de gerir e alojar as minhas próprias aplicações na cloud. Procuro ingressar no Mestrado do ISEP para consolidar conhecimentos em padrões de desenho e no desenvolvimento de sistemas escaláveis e de alta qualidade.}
+
+% --- EDUCAÇÃO ---
+\\sectiondivider{Educação}
+\\noindent
+\\textbf{\\color{textColor} Universidade de Trás-os-Montes e Alto Douro (UTAD)} \\hfill {\\color{dateColor}\\small Set 2023 -- Jul 2026 (Previsão)} \\\\
+\\textit{\\color{textColor!90} Licenciatura em Engenharia Informática}
+\\begin{itemize}[noitemsep, topsep=3pt, leftmargin=12pt]
+    \\item{\\color{textColor} Desenvolvimento de competências nucleares em algoritmos, arquitetura de sistemas e engenharia de requisitos.}
+    \\item{\\color{textColor} \\textbf{Média atual:} 14 valores.}
+\\end{itemize}
+
+% --- PROJETOS ---
+\\sectiondivider{Projetos}
+
+\\noindent
+\\textbf{\\color{textColor} ProjectPilot -- Assistente de IA Documental} \\hfill {\\color{dateColor}\\small 2026} \\\\
+\\textit{\\color{textColor!80}\\small Parceria de Investigação com o INESC TEC (Repositório Privado)}
+\\begin{itemize}[noitemsep, topsep=2pt, leftmargin=12pt]
+    \\item{\\color{textColor} Desenho de uma arquitetura segura para processamento \\textit{offline} de documentação técnica, garantindo a privacidade total dos dados através da execução local de modelos de Inteligência Artificial.}
+    \\item{\\color{textColor} Implementação de um \\textit{pipeline} RAG (\\textit{Retrieval-Augmented Generation}) acoplado ao modelo \\textit{Large Language Model} (Llama 3.1) para extração semântica e respostas contextuais precisas.}
+    \\item{\\color{textColor} Integração do motor de inferência numa interface visual interativa utilizando Open WebUI, otimizando a experiência de interação do utilizador final com o sistema de IA.}
+\\end{itemize}
+\\vspace{6pt}
+
+\\noindent
+\\textbf{\\color{textColor} Otaku Time Pro -- Plataforma Full-Stack e App Mobile} \\hfill {\\color{dateColor}\\small 2026} \\\\
+\\textit{\\color{textColor!80}\\small Projeto Pessoal Autónomo}
+\\begin{itemize}[noitemsep, topsep=2pt, leftmargin=12pt]
+    \\item{\\color{textColor} Arquitetura de um ecossistema \\textit{cloud} completo utilizando \\textbf{React} (Frontend) e \\textbf{NestJS} (Backend API), com alojamento e integração contínua (CI/CD) via Render.}
+    \\item{\\color{textColor} Modelação e gestão de base de dados relacional em ambiente \\textit{cloud} (\\textbf{PostgreSQL / Neon DB}) integrada através do ORM \\textbf{Prisma}.}
+    \\item{\\color{textColor} Desenvolvimento multiplataforma garantindo uma experiência nativa em Android através do \\textbf{Capacitor}, consumindo a API centralizada para sincronização em tempo real.}
+    \\item{\\color{textColor} Integração de dados complexos através de múltiplas APIs externas (AniList, MangaUpdates) desenvolvendo algoritmos de \\textit{fallback} e \\textit{background syncing} para estabilidade da informação.}
+\\end{itemize}
+\\vspace{6pt}
+
+\\noindent
+\\textbf{\\color{textColor} Plataforma de Monitorização IoT Distribuída} \\hfill {\\color{dateColor}\\small 2026} \\\\
+\\textit{\\color{textColor!80}\\small Projeto Académico de Sistemas Distribuídos (Repositório Privado)}
+\\begin{itemize}[noitemsep, topsep=2pt, leftmargin=12pt]
+    \\item{\\color{textColor} Arquitetura e implementação de um sistema IoT assíncrono para telemetria, utilizando um modelo \\textbf{Pub/Sub} através de \\textbf{RabbitMQ} (Topic Exchanges).}
+    \\item{\\color{textColor} Desenho de uma arquitetura de microsserviços integrando componentes heterogéneos (C\\#, Python, Node.js) comunicando estritamente via \\textbf{gRPC} e \\textbf{Protocol Buffers}.}
+    \\item{\\color{textColor} Implementação de mecanismos avançados de resiliência e tolerância a falhas, incluindo \\textit{Dead-Letter Exchanges}, \\textit{Retry policies} exponenciais (\\textbf{Polly}) e \\textit{Fallbacks}.}
+    \\item{\\color{textColor} Desacoplamento da camada de dados utilizando armazenamento persistente em \\textbf{MongoDB} para o registo em tempo real de métricas ambientais.}
+\\end{itemize}
+\\vspace{6pt}
+
+% --- COMPETÊNCIAS ---
+\\sectiondivider{Competências Técnicas}
+\\noindent
+\\begin{tabular}{@{} p{4.2cm} p{12.8cm} @{}}
+    \\textbf{\\color{textColor} Linguagens:} & {\\color{textColor} C\\#, TypeScript, JavaScript, Python, C, C++, HTML5/CSS3} \\\\ [3pt]
+    \\textbf{\\color{textColor} Bases de Dados:} & {\\color{textColor} PostgreSQL, SQLite, MongoDB, Supabase} \\\\ [3pt]
+    \\textbf{\\color{textColor} Frameworks \\& APIs:} & {\\color{textColor} ASP.NET Core, gRPC, RabbitMQ, Stripe API, NestJS, React, Capacitor} \\\\ [3pt]
+    \\textbf{\\color{textColor} Ferramentas \\& Padrões:} & {\\color{textColor} Docker, CI/CD, RAG, Protocol Buffers, Distributed Systems, QA Testing} \\\\
+\\end{tabular}
+\\end{document}`;
+
+    const blob = new Blob([latexCode], { type: 'text/x-tex' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'curriculum_pedro_braz.tex'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
   }
 
-  // Filter Categories
-  const filterCategories = ["Todos", "Full-Stack", "IA & RAG", "IoT & Distribuídos", "Outros"]
-
-  const filteredProjects = projects.filter(project => {
-    if (activeFilter === "Todos") return true
-    if (activeFilter === "Full-Stack") return project.tags.includes("NestJS")
-    if (activeFilter === "IA & RAG") return project.tags.includes("RAG") || project.tags.includes("Llama 3.1")
-    if (activeFilter === "IoT & Distribuídos") return project.tags.includes("RabbitMQ") || project.tags.includes("gRPC")
-    if (activeFilter === "Outros") return project.tags.includes("WebGL") || project.tags.includes("Three.js")
-    return true
-  })
-
-  // Reset index when filter changes
+  // Reset inner project carousel index when active project changes
   useEffect(() => {
-    setProjectIndex(0)
-    setImageIndex(0)
-  }, [activeFilter])
+    setCurrentImageIndex(0)
+  }, [currentProjectIndex])
 
-  const activeProject = filteredProjects[projectIndex] || projects[0]
-
+  // Projects Y-axis 3D flipping handlers
   const handleNextProject = () => {
-    if (animating) return
-    setAnimating(true)
+    if (isFlipping || currentProjectIndex >= projects.length - 1) return
+    setOldProjectIndex(currentProjectIndex)
+    setOldImageIndex(currentImageIndex)
+    setIsFlipping(true)
+    setFlipDirection('next')
+    
+    // Change core index immediately so backgrounds update
+    setCurrentProjectIndex((prev) => prev + 1)
+
+    // Clear flipping state after animation duration (600ms)
     setTimeout(() => {
-      setProjectIndex((prev) => (prev + 1) % filteredProjects.length)
-      setImageIndex(0)
-      setAnimating(false)
-    }, 250)
+      setIsFlipping(false)
+      setFlipDirection(null)
+      setOldProjectIndex(null)
+    }, 600)
   }
 
   const handlePrevProject = () => {
-    if (animating) return
-    setAnimating(true)
+    if (isFlipping || currentProjectIndex <= 0) return
+    setOldProjectIndex(currentProjectIndex)
+    setOldImageIndex(currentImageIndex)
+    setIsFlipping(true)
+    setFlipDirection('prev')
+
+    setCurrentProjectIndex((prev) => prev - 1)
+
     setTimeout(() => {
-      setProjectIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length)
-      setImageIndex(0)
-      setAnimating(false)
-    }, 250)
+      setIsFlipping(false)
+      setFlipDirection(null)
+      setOldProjectIndex(null)
+    }, 600)
   }
 
-  const handleNextImage = (e: React.MouseEvent, max: number) => {
-    e.stopPropagation()
-    setImageIndex((prev) => (prev + 1) % max)
+  // Curriculum Y-axis 3D flipping handlers
+  const handleNextCurriculum = () => {
+    if (isFlipping || currentCurriculumPage >= 1) return
+    setOldCurriculumPage(currentCurriculumPage)
+    setIsFlipping(true)
+    setFlipDirection('next')
+
+    setCurrentCurriculumPage(1)
+
+    setTimeout(() => {
+      setIsFlipping(false)
+      setFlipDirection(null)
+      setOldCurriculumPage(null)
+    }, 600)
   }
 
-  const handlePrevImage = (e: React.MouseEvent, max: number) => {
-    e.stopPropagation()
-    setImageIndex((prev) => (prev - 1 + max) % max)
+  const handlePrevCurriculum = () => {
+    if (isFlipping || currentCurriculumPage <= 0) return
+    setOldCurriculumPage(currentCurriculumPage)
+    setIsFlipping(true)
+    setFlipDirection('prev')
+
+    setCurrentCurriculumPage(0)
+
+    setTimeout(() => {
+      setIsFlipping(false)
+      setFlipDirection(null)
+      setOldCurriculumPage(null)
+    }, 600)
   }
 
-  const openLightbox = () => {
-    setLightboxOpen(true)
+  // Tab Switcher
+  const switchTab = (tab: 'projetos' | 'curriculo') => {
+    if (isFlipping) return
+    setActiveTab(tab)
+    setIsFlipping(false)
+    setFlipDirection(null)
+    setOldProjectIndex(null)
+    setOldCurriculumPage(null)
   }
 
-  // Keyboard navigation for image gallery and lightbox
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!activeProject || !activeProject.images || activeProject.images.length === 0) return
-
-      if (lightboxOpen) {
-        if (e.key === "ArrowRight") {
-          setImageIndex((prev) => (prev + 1) % activeProject.images.length)
-        } else if (e.key === "ArrowLeft") {
-          setImageIndex((prev) => (prev - 1 + activeProject.images.length) % activeProject.images.length)
-        } else if (e.key === "Escape") {
-          setLightboxOpen(false)
-        }
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [lightboxOpen, activeProject])
-
-  return (
-    <div className="relative min-h-screen bg-grid-mesh pb-24 text-slate-300 selection:bg-indigo-500 selection:text-white">
-      {/* Background Glowing Ambient Orbs */}
-      <div className="absolute top-[5%] left-[-15%] w-[600px] h-[600px] glow-purple rounded-full pointer-events-none z-0 animate-float-premium" />
-      <div className="absolute top-[35%] right-[-15%] w-[700px] h-[700px] glow-indigo rounded-full pointer-events-none z-0 animate-float-premium-delayed" />
-      <div className="absolute bottom-[5%] left-[10%] w-[500px] h-[500px] glow-teal rounded-full pointer-events-none z-0 animate-float-premium" />
-
-      {/* Header Navigation */}
-      <nav className="sticky top-0 z-50 glass-navbar px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <button 
-            onClick={() => navigateToView("projects", "hero")}
-            className="flex items-center gap-2.5 font-display font-bold text-xl tracking-tight text-white group cursor-pointer bg-transparent border-none"
-          >
-            <Terminal className="w-5 h-5 text-indigo-400 group-hover:rotate-6 transition-transform" />
-            <span>pedro<span className="text-indigo-400">.braz</span>()</span>
-          </button>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <button 
-              onClick={() => navigateToView("curriculum", "about")}
-              className={`hover:text-white transition-colors cursor-pointer bg-transparent border-none ${
-                activeView === "curriculum" ? "text-indigo-400 font-semibold" : "text-slate-400"
-              }`}
-            >
-              Sobre
-            </button>
-            <button 
-              onClick={() => navigateToView("curriculum", "skills")}
-              className={`hover:text-white transition-colors cursor-pointer bg-transparent border-none ${
-                activeView === "curriculum" ? "text-indigo-400 font-semibold" : "text-slate-400"
-              }`}
-            >
-              Competências
-            </button>
-            <button 
-              onClick={() => navigateToView("projects", "projects")}
-              className={`hover:text-white transition-colors cursor-pointer bg-transparent border-none ${
-                activeView === "projects" ? "text-indigo-400 font-semibold" : "text-slate-400"
-              }`}
-            >
-              Projetos
-            </button>
-            <button 
-              onClick={() => navigateToView("curriculum", "education")}
-              className={`hover:text-white transition-colors cursor-pointer bg-transparent border-none ${
-                activeView === "curriculum" ? "text-indigo-400 font-semibold" : "text-slate-400"
-              }`}
-            >
-              Educação
-            </button>
-            <button 
-              onClick={() => navigateToView(activeView, "contact")}
-              className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-lg shadow-indigo-600/20 hover:shadow-indigo-600/40 hover:-translate-y-0.5 transition-all cursor-pointer border-none"
-            >
-              Contacto
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section id="hero" className="relative pt-12 md:pt-24 pb-16 px-6 max-w-6xl mx-auto z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* Left Column: Big Typography and Intro (7/12) */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-indigo-500/10 border border-indigo-500/25 text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-6 badge-glow animate-fade-in-up-premium">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Disponível para Mestrado & Projetos</span>
-            </div>
-
-            <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight text-white mb-6 animate-fade-in-up-premium animation-delay-100 leading-none">
-              PEDRO <br/>
-              <span className="text-indigo-400">BRAZ</span>
-            </h1>
-
-            <p className="text-xl md:text-2xl font-display font-medium text-slate-300 mb-6 max-w-xl animate-fade-in-up-premium animation-delay-200">
-              Software Engineer com foco em <span className="shimmer-text-premium font-bold">TypeScript, C# e Inteligência Artificial</span>
-            </p>
-
-            <p className="text-slate-400 text-base md:text-lg mb-8 leading-relaxed max-w-lg animate-fade-in-up-premium animation-delay-300">
-              Estudante finalista de Engenharia Informática focado no desenho de arquiteturas robustas, sistemas distribuídos e simulação gráfica 3D.
-            </p>
-
-            <div className="flex flex-wrap gap-4 animate-fade-in-up-premium animation-delay-450 w-full sm:w-auto">
-              <button 
-                onClick={() => navigateToView("projects", "projects")}
-                className="px-6 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 hover:-translate-y-1 transition-all flex items-center gap-2 justify-center w-full sm:w-auto cursor-pointer border-none"
-              >
-                <span>Explorar Projetos</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
-              <button 
-                onClick={() => navigateToView("curriculum", "about")}
-                className="px-6 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 font-semibold hover:-translate-y-1 transition-all justify-center w-full sm:w-auto text-center cursor-pointer"
-              >
-                Ver Currículo Académico
-              </button>
-            </div>
-          </div>
-
-          {/* Right Column: Premium Code Window Mockup (5/12) */}
-          <div className="lg:col-span-5 animate-fade-in-up-premium animation-delay-600">
-            <div className="w-full glass-card rounded-2xl overflow-hidden shadow-2xl border border-white/5 animate-float-premium">
-              {/* macOS Style Bar */}
-              <div className="terminal-bar px-4 py-3 flex items-center justify-between">
-                <div className="flex gap-1.5">
-                  <span className="terminal-dot terminal-dot-close" />
-                  <span className="terminal-dot terminal-dot-minimize" />
-                  <span className="terminal-dot terminal-dot-zoom" />
-                </div>
-                <span className="text-xs font-mono text-slate-500">profile.ts</span>
-                <span className="w-12" /> {/* spacer */}
-              </div>
-              
-              {/* Terminal Code Content */}
-              <div className="p-6 text-left font-mono text-xs md:text-sm leading-relaxed overflow-x-auto bg-slate-950/70">
-                <p className="text-slate-500">// Perfil de Engenharia</p>
-                <p className="mt-2 text-indigo-300">
-                  <span className="text-pink-400">const</span> engineer = <span className="text-pink-400">new</span> <span className="text-teal-300">SoftwareEngineer</span>(<span className="text-emerald-400">"Pedro Braz"</span>);
-                </p>
-                
-                <p className="mt-3 text-indigo-300">
-                  engineer.<span className="text-sky-300">focusAreas</span>([
-                </p>
-                <p className="pl-6 text-emerald-400">
-                  "TypeScript/Node.js",<br/>
-                  "C#/.NET Core",<br/>
-                  "AI & Local RAG",<br/>
-                  "Bases de Dados"<br/>
-                </p>
-                <p className="text-indigo-300">
-                  ]);
-                </p>
-
-                <p className="mt-4 text-indigo-300">
-                  engineer.<span className="text-sky-300">competencies</span> = &#123;
-                </p>
-                <p className="pl-6 text-indigo-300">
-                  distributedSystems: <span className="text-amber-400">"RabbitMQ + gRPC"</span>,<br/>
-                  graphics3D: <span className="text-amber-400">"WebGL + Three.js"</span>,<br/>
-                  requirements: <span className="text-amber-400">"Engenharia de Requisitos"</span>
-                </p>
-                <p className="text-indigo-300">
-                  &#125;;
-                </p>
-
-                <p className="mt-4 text-indigo-300">
-                  engineer.<span className="text-sky-300">academicStatus</span> = <span className="text-emerald-400">"Finalist @ UTAD"</span>;
-                </p>
-                <p className="text-indigo-300">
-                  engineer.<span className="text-sky-300">nextMilestone</span> = <span className="text-emerald-400">"Mestrado @ ISEP"</span>;
-                </p>
+  // PROJECT RENDER HELPERS (for modular reuse)
+  const renderProjectLeftPage = (idx: number, _isPageInsideSheet = false) => {
+    const p = projects[idx]
+    return (
+      <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between relative bg-white overflow-y-auto lg:overflow-visible">
+        {/* Subtle dot pattern */}
+        <div className="absolute inset-0 screentone-subtle opacity-[0.15] pointer-events-none z-0" />
+        
+        <div className="relative z-10 flex flex-col h-full justify-between">
+          <div>
+            {/* Header - upgraded text size */}
+            <div className="flex justify-between items-center border-b border-manga-text/20 pb-2 mb-4">
+              <div>
+                <span className="text-xs font-mono font-bold text-manga-text/60 uppercase tracking-widest block">
+                  PROJETO {idx + 1} DE {projects.length}
+                </span>
+                <span className="text-xs font-hand font-bold text-manga-accent-blue block uppercase">
+                  {p.chapter}
+                </span>
               </div>
             </div>
-          </div>
 
-        </div>
-
-        {/* Floating Metrics grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 w-full max-w-4xl mx-auto animate-fade-in-up-premium animation-delay-800">
-          <div className="glass-card p-5 rounded-2xl flex items-center gap-4 hover:border-indigo-500/30 transition-colors">
-            <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/15">
-              <MapPin className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Localização</p>
-              <p className="text-sm font-semibold text-white">Mirandela, Portugal</p>
-            </div>
-          </div>
-          <div className="glass-card p-5 rounded-2xl flex items-center gap-4 hover:border-emerald-500/30 transition-colors">
-            <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/15">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Formação</p>
-              <p className="text-sm font-semibold text-white">Engenharia Informática</p>
-            </div>
-          </div>
-          <div className="glass-card p-5 rounded-2xl flex items-center gap-4 hover:border-purple-500/30 transition-colors">
-            <div className="p-3 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/15">
-              <Github className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold">Código-Fonte</p>
-              <a href="https://github.com/Braz55" target="_blank" rel="noreferrer" className="text-sm font-semibold text-white hover:text-indigo-400 transition-colors flex items-center gap-1">
-                <span>github.com/Braz55</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-indigo-400" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* View Selector (Segmented Control) */}
-      <div className="max-w-md mx-auto mb-8 px-6 z-20 relative animate-fade-in-up-premium animation-delay-800">
-        <div className="p-1.5 bg-slate-950/80 border border-slate-800/80 rounded-2xl flex items-center shadow-2xl backdrop-blur-md">
-          <button 
-            onClick={() => navigateToView("projects", "projects")}
-            className={`flex-1 py-3 px-4 rounded-xl font-display font-bold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 border-none ${
-              activeView === "projects"
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/35"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            <Sparkles className="w-4.5 h-4.5" />
-            Projetos de Destaque
-          </button>
-          <button 
-            onClick={() => navigateToView("curriculum", "about")}
-            className={`flex-1 py-3 px-4 rounded-xl font-display font-bold text-sm transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 border-none ${
-              activeView === "curriculum"
-                ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/35"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            <BookOpen className="w-4.5 h-4.5" />
-            Currículo Profissional
-          </button>
-        </div>
-      </div>
-
-      {activeView === "curriculum" && (
-        <>
-          {/* About Section */}
-          <section id="about" className="relative py-20 px-6 max-w-6xl mx-auto z-10 scroll-mt-20">
-        <ScrollReveal>
-          <div className="glass-card p-8 md:p-14 rounded-3xl relative overflow-hidden">
-            {/* Ambient blur lighting */}
-            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-glow-indigo opacity-30 pointer-events-none" />
-            
-            <div className="flex items-center gap-2 mb-8">
-              <span className="w-8 h-1 bg-indigo-500 rounded-full inline-block" />
-              <h2 className="font-display font-bold text-3xl md:text-4xl text-white">
-                Perfil Profissional
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-12 space-y-6 text-slate-300 text-lg leading-relaxed">
-                <p>
-                  Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada do ciclo de vida de desenvolvimento de software. Demonstro sólida proficiência prática em arquitetura orientada a objetos e ambientes full-stack, com foco particular nos ecossistemas TypeScript/JavaScript e C#.
-                </p>
-                <p>
-                  O meu percurso inclui o desenho e implementação de sistemas distribuídos e arquiteturas orientadas a eventos, programação gráfica 3D com WebGL e a modelação avançada de bases de dados relacionais (utilizando PostgreSQL e SQLite). Alinho competências analíticas em engenharia de requisitos e modelação conceptual à proatividade de gerir e alojar as minhas próprias aplicações na cloud. Procuro ingressar no Mestrado do ISEP para consolidar conhecimentos em padrões de desenho e no desenvolvimento de sistemas escaláveis e de alta qualidade.
-                </p>
+            {/* Icon + Title - upgraded subtitle */}
+            <div className="flex items-center gap-3 mb-3">
+              <div className="p-2.5 rounded bg-manga-bg border border-manga-text shadow-[2px_2px_0px_#2C2C35]">
+                {p.icon}
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold tracking-tight font-sans text-manga-text">
+                  {p.title}
+                </h3>
+                <p className="text-xs lg:text-sm font-mono text-manga-text/70 font-semibold">{p.subtitle}</p>
               </div>
             </div>
-          </div>
-        </ScrollReveal>
-      </section>
 
-      {/* Technical Skills Section */}
-      <section id="skills" className="relative py-20 px-6 max-w-6xl mx-auto z-10 scroll-mt-20">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">
-              Competências Técnicas
-            </h2>
-            <p className="text-slate-400 max-w-lg mx-auto text-base">
-              Stack de desenvolvimento e ferramentas integradas com as quais possuo experiência prática e académica.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {skillCategories.map((category, idx) => (
-              <div key={idx} className="glass-card p-8 rounded-2xl glass-card-hover flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-3.5 mb-6">
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                      {category.icon}
-                    </div>
-                    <h3 className="font-display font-bold text-xl text-white">
-                      {category.title}
-                    </h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2.5">
-                    {category.skills.map((skill, sIdx) => (
-                      <span 
-                        key={sIdx} 
-                        className="px-3.5 py-2 rounded-xl bg-slate-950/60 border border-slate-900 text-slate-300 text-sm hover:border-indigo-500/40 hover:text-white transition-all cursor-default"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
-      </section>
-        </>
-      )}
-
-      {activeView === "projects" && (
-        /* Projects Showcase Carousel Section */
-        <section id="projects" className="relative py-20 px-6 max-w-6xl mx-auto z-10 scroll-mt-20">
-        <ScrollReveal>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="text-left">
-              <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">
-                Projetos de Destaque
-              </h2>
-              <p className="text-slate-400 max-w-md">
-                Uma exibição interativa focada no código e resultados, navegável através das setas direcionais.
-              </p>
-            </div>
-
-            {/* Filter Categories */}
-            <div className="flex flex-wrap gap-2 bg-slate-900/60 border border-slate-800/80 p-1.5 rounded-xl w-fit">
-              {filterCategories.map((category, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveFilter(category)}
-                  className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                    activeFilter === category 
-                      ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/30" 
-                      : "text-slate-400 hover:text-white"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Carousel Body */}
-          {filteredProjects.length > 0 ? (
-            <div className="relative flex items-center justify-center gap-4 lg:gap-8">
-              
-              {/* Left Project Switcher */}
-              <button
-                onClick={handlePrevProject}
-                className="p-3.5 md:p-4 rounded-full bg-slate-900/90 border border-slate-800 hover:border-indigo-500 text-slate-400 hover:text-white hover:bg-slate-800 shadow-xl transition-all cursor-pointer z-20 flex-shrink-0"
-                title="Projeto Anterior"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-
-              {/* Main Showcase Panel */}
-              <div 
-                className={`w-full max-w-5xl glass-card rounded-3xl overflow-hidden shadow-2xl border border-white/5 transition-all duration-300 ${
-                  animating ? "opacity-0 translate-y-4 scale-[0.98]" : "opacity-100 translate-y-0 scale-100"
-                }`}
-              >
-                {/* Decorative bar */}
-                <div className="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-teal-400" />
-                
-                <div className="flex flex-col">
-                  
-                  {/* Top: Large macOS Browser Mockup containing the screenshots */}
-                  {activeProject.images && activeProject.images.length > 0 && (
-                    <div className="p-4 md:p-6 bg-slate-950/40 border-b border-slate-800/80">
-                      <div className="w-full glass-card rounded-2xl overflow-hidden shadow-2xl border border-slate-800 bg-slate-950/80 flex flex-col relative group shadow-2xl shadow-indigo-500/10">
-                        
-                        {/* macOS Header */}
-                        <div className="terminal-bar px-4 py-3 flex items-center justify-between border-b border-slate-900 bg-slate-950">
-                          <div className="flex gap-1.5">
-                            <span className="terminal-dot terminal-dot-close" />
-                            <span className="terminal-dot terminal-dot-minimize" />
-                            <span className="terminal-dot terminal-dot-zoom" />
-                          </div>
-                          <span className="text-[11px] font-mono font-semibold text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-md select-none tracking-wide">
-                            {activeProject.title} - Preview ({imageIndex + 1} de {activeProject.images.length})
-                          </span>
-                          <span className="w-12" /> {/* spacer */}
-                        </div>
-
-                        {/* Large Image Frame */}
-                        <div 
-                          className="relative cursor-pointer overflow-hidden flex items-center justify-center p-6 bg-slate-950/70 min-h-[350px] md:min-h-[600px] z-10"
-                          onClick={() => openLightbox()}
-                        >
-                          {/* Ambient Glow Backdrop */}
-                          <div className="absolute inset-0 overflow-hidden pointer-events-none select-none rounded-lg z-0">
-                            <img 
-                              src={activeProject.images[imageIndex]} 
-                              alt=""
-                              className="w-full h-full object-cover scale-125 blur-3xl opacity-25 select-none pointer-events-none"
-                            />
-                          </div>
-
-                          <img 
-                            src={activeProject.images[imageIndex]} 
-                            alt={`${activeProject.title} screenshot ${imageIndex + 1}`}
-                            className="w-auto h-auto max-h-[580px] max-w-[95%] object-contain rounded-lg shadow-2xl border border-white/5 hover:scale-[1.015] transition-all duration-300 z-10"
-                          />
-                          
-                          {/* Hover View Fullscreen Icon */}
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
-                            <div className="px-4 py-2.5 rounded-xl bg-slate-950/95 text-white shadow-2xl border border-slate-800 flex items-center gap-2 text-xs font-semibold">
-                              <Maximize2 className="w-4 h-4 text-indigo-400" />
-                              <span>Ampliar Imagem</span>
-                            </div>
-                          </div>
-
-                          {/* Image Nav Arrows inside Frame */}
-                          {activeProject.images.length > 1 && (
-                            <>
-                              <button
-                                onClick={(e) => handlePrevImage(e, activeProject.images.length)}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 p-3.5 rounded-full bg-slate-950/80 border border-slate-800/80 hover:border-indigo-500/80 text-slate-400 hover:text-white transition-all shadow-2xl z-20 backdrop-blur-md hover:scale-105"
-                                title="Imagem Anterior"
-                              >
-                                <ChevronLeft className="w-5 h-5" />
-                              </button>
-                              <button
-                                onClick={(e) => handleNextImage(e, activeProject.images.length)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 p-3.5 rounded-full bg-slate-950/80 border border-slate-800/80 hover:border-indigo-500/80 text-slate-400 hover:text-white transition-all shadow-2xl z-20 backdrop-blur-md hover:scale-105"
-                                title="Próxima Imagem"
-                              >
-                                <ChevronRight className="w-5 h-5" />
-                              </button>
-                            </>
-                          )}
-
-                          {/* Top Right Counter Badge */}
-                          <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-slate-800/60 text-[10px] font-mono font-bold text-indigo-400">
-                            {imageIndex + 1} / {activeProject.images.length}
-                          </div>
-                        </div>
-
-                        {/* Bottom Filmstrip / Thumbnails */}
-                        {activeProject.images.length > 1 && (
-                          <div className="flex items-center justify-center gap-3 px-6 py-4 bg-slate-950 border-t border-slate-900 overflow-x-auto select-none">
-                            {activeProject.images.map((img, idx) => (
-                              <button
-                                key={idx}
-                                onClick={(e) => { e.stopPropagation(); setImageIndex(idx) }}
-                                className={`relative w-16 h-10 md:w-20 md:h-12 rounded-lg overflow-hidden transition-all duration-200 flex-shrink-0 cursor-pointer ${
-                                  imageIndex === idx 
-                                    ? "ring-2 ring-indigo-500 ring-offset-2 ring-offset-slate-950 scale-105 opacity-100 shadow-lg shadow-indigo-500/25" 
-                                    : "opacity-40 hover:opacity-85 hover:scale-102"
-                                }`}
-                              >
-                                <img src={img} alt={`Miniatura ${idx + 1}`} className="w-full h-full object-cover" />
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Bottom: Project Details divided into Grid Columns */}
-                  <div className="p-6 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-8">
-                    
-                    {/* Left details text (8/12) */}
-                    <div className="md:col-span-8 flex flex-col justify-between">
-                      <div>
-                        <div className="flex items-center gap-3.5 mb-6">
-                          <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 shadow-inner">
-                            {activeProject.icon}
-                          </div>
-                          <div>
-                            <h3 className="font-display font-extrabold text-2xl md:text-3xl text-white">
-                              {activeProject.title}
-                            </h3>
-                            <p className="text-indigo-400 text-sm font-semibold mt-1">
-                              {activeProject.subtitle}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Detail points */}
-                        <ul className="space-y-3.5">
-                          {activeProject.details.map((detail, dIdx) => (
-                            <li key={dIdx} className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed">
-                              <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-2 flex-shrink-0" />
-                              <span>{detail}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    {/* Right tags & period metadata (4/12) */}
-                    <div className="md:col-span-4 flex flex-col justify-between border-t md:border-t-0 md:border-l border-slate-800/80 pt-6 md:pt-0 md:pl-8">
-                      <div>
-                        <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-4">
-                          Informações do Projeto
-                        </h4>
-                        
-                        <div className="space-y-4 mb-8">
-                          <div>
-                            <p className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Período</p>
-                            <p className="text-sm font-semibold text-white mt-0.5">{activeProject.period}</p>
-                          </div>
-                          <div>
-                            <p className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Tipo</p>
-                            <p className="text-sm text-slate-300 mt-0.5">{activeProject.type}</p>
-                          </div>
-                        </div>
-
-                        <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-4">
-                          Stack Tecnológica
-                        </h4>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {activeProject.tags.map((tag, tIdx) => (
-                          <span 
-                            key={tIdx} 
-                            className="px-3 py-1 rounded-lg bg-indigo-500/10 text-indigo-300 text-xs font-semibold border border-indigo-500/10"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-
-              {/* Right Project Switcher */}
-              <button
-                onClick={handleNextProject}
-                className="p-3.5 md:p-4 rounded-full bg-slate-900/90 border border-slate-800 hover:border-indigo-500 text-slate-400 hover:text-white hover:bg-slate-800 shadow-xl transition-all cursor-pointer z-20 flex-shrink-0"
-                title="Próximo Projeto"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-
-            </div>
-          ) : (
-            <div className="glass-card p-12 rounded-2xl text-center text-slate-400">
-              Nenhum projeto encontrado nesta categoria.
-            </div>
-          )}
-        </ScrollReveal>
-
-        {/* Bullet Pagination Indicators for Projects List */}
-        {filteredProjects.length > 1 && (
-          <div className="flex items-center justify-center gap-3 mt-8 z-10 relative">
-            {filteredProjects.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  if (animating) return
-                  setAnimating(true)
-                  setTimeout(() => {
-                    setProjectIndex(idx)
-                    setImageIndex(0)
-                    setAnimating(false)
-                  }, 250)
-                }}
-                className={`w-3 h-3 rounded-full border transition-all cursor-pointer ${
-                  projectIndex === idx 
-                    ? "bg-indigo-500 border-indigo-500 w-8 shadow-lg shadow-indigo-500/30" 
-                    : "border-slate-800 bg-slate-900 hover:border-slate-600"
-                }`}
-                title={`Ir para o projeto ${idx + 1}`}
-              />
-            ))}
-          </div>
-        )}
-      </section>
-      )}
-
-      {activeView === "curriculum" && (
-        /* Education Timeline Section */
-        <section id="education" className="relative py-20 px-6 max-w-4xl mx-auto z-10 scroll-mt-20">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">
-              Educação e Percurso
-            </h2>
-            <p className="text-slate-400">
-              A minha formação e base académica em Engenharia Informática.
-            </p>
-          </div>
-
-          {/* Timeline */}
-          <div className="relative border-l border-slate-800 ml-4 md:ml-6 pl-8 md:pl-10 space-y-12">
-            {/* Dot indicator */}
-            <div className="absolute left-[-6px] top-1.5 w-3 h-3 rounded-full bg-indigo-500 ring-4 ring-indigo-500/20" />
-            
-            <div className="glass-card p-6 md:p-8 rounded-2xl relative">
-              <span className="absolute top-6 right-6 text-xs text-indigo-400 font-mono font-bold bg-indigo-500/10 border border-indigo-500/20 px-3 py-1 rounded-full">
-                Set 2023 -- Jul 2026 (Previsão)
-              </span>
-              
-              <h3 className="font-display font-bold text-2xl text-white mb-2">
-                Licenciatura em Engenharia Informática
-              </h3>
-              <p className="text-lg text-slate-300 font-medium mb-6">
-                Universidade de Trás-os-Montes e Alto Douro (UTAD)
-              </p>
-              
-              <ul className="space-y-3.5 text-slate-300 text-sm">
-                <li className="flex items-start gap-2.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-2 flex-shrink-0" />
-                  <span>Desenvolvimento de competências nucleares em algoritmos, arquitetura de sistemas distribuídos e engenharia de requisitos.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-2 flex-shrink-0" />
-                  <span>Foco em computação gráfica e interfaces interativas, segurança aplicacional (RBAC/Identity/JWT) e usabilidade.</span>
-                </li>
+            {/* Details list - upgraded from text-xs to text-sm and text color to solid ink-blue */}
+            <div className="mt-4">
+              <h4 className="text-xs font-mono font-bold text-manga-accent-blue uppercase tracking-wider mb-2">Detalhes de Engenharia:</h4>
+              <ul className="text-[13px] lg:text-sm font-sans space-y-2 text-manga-text pl-1 leading-relaxed">
+                {p.details.map((detail, dIdx) => (
+                  <li key={dIdx} className="flex gap-2 items-start">
+                    <span className="text-manga-accent-red font-bold text-base leading-none flex-shrink-0">&bull;</span>
+                    <span>{detail}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
-        </ScrollReveal>
-      </section>
-      )}
 
-      {/* Contact Section */}
-      <section id="contact" className="relative py-20 px-6 max-w-4xl mx-auto z-10 scroll-mt-20">
-        <ScrollReveal>
-          <div className="glass-card p-8 md:p-14 rounded-3xl text-center relative overflow-hidden">
-            <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-glow-teal opacity-30 pointer-events-none" />
-            
-            <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4">
-              Vamos trabalhar juntos?
-            </h2>
-            <p className="text-slate-400 max-w-lg mx-auto mb-10 text-base leading-relaxed">
-              Estou ativamente à procura de novas oportunidades, projetos desafiantes ou contacto relacionado com a entrada no Mestrado do ISEP.
-            </p>
-
-            <div className="flex flex-col items-center gap-6">
-              {/* Copy email widget */}
-              <div className="flex items-center justify-between gap-3 bg-slate-950 border border-slate-900 p-2 rounded-xl max-w-full w-[380px] shadow-inner">
-                <div className="flex items-center gap-3 pl-3 overflow-hidden">
-                  <Mail className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-                  <span className="text-slate-200 text-sm font-semibold truncate select-all">
-                    pm7703125@gmail.com
-                  </span>
-                </div>
-                <button 
-                  onClick={copyEmail}
-                  className="px-4 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+          {/* Tags - upgraded from text-[9px] to text-xs */}
+          <div className="mt-4 pt-2 border-t border-manga-text/10">
+            <div className="flex flex-wrap gap-1.5">
+              {p.tags.map((tag, tIdx) => (
+                <span 
+                  key={tIdx} 
+                  className="text-xs font-mono font-bold px-2.5 py-0.5 border border-manga-text/30 bg-manga-accent-red-light text-manga-accent-red rounded"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copied ? "Copiado!" : "Copiar"}</span>
-                </button>
-              </div>
-
-              {/* Action details cards links */}
-              <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
-                <a 
-                  href="https://github.com/Braz55" 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/40 text-slate-300 hover:text-white transition-all flex items-center gap-2 text-sm font-semibold"
-                >
-                  <Github className="w-4 h-4 text-indigo-400" />
-                  <span>GitHub Profile</span>
-                </a>
-                <a 
-                  href="mailto:pm7703125@gmail.com" 
-                  className="px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/40 text-slate-300 hover:text-white transition-all flex items-center gap-2 text-sm font-semibold"
-                >
-                  <Mail className="w-4 h-4 text-indigo-400" />
-                  <span>Enviar E-mail</span>
-                </a>
-                <a 
-                  href="tel:+351914271784"
-                  className="px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-indigo-500/40 text-slate-300 hover:text-white transition-all flex items-center gap-2 text-sm font-semibold"
-                >
-                  <Phone className="w-4 h-4 text-indigo-400" />
-                  <span>+351 914 271 784</span>
-                </a>
-              </div>
+                  #{tag}
+                </span>
+              ))}
+            </div>
+            <div className="text-xs font-mono text-manga-text/40 mt-3 text-left">
+              Pág. {(idx * 2) + 1}
             </div>
           </div>
-        </ScrollReveal>
-      </section>
+        </div>
+      </div>
+    )
+  }
 
-      {/* Lightbox Modal */}
-      {lightboxOpen && (
-        <div 
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950/95 backdrop-blur-xl p-4 cursor-default select-none animate-fade-in"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setLightboxOpen(false)
-          }}
-        >
-          {/* Immersive Ambient Glow for Lightbox */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
-            <img 
-              src={activeProject.images[imageIndex]} 
-              alt=""
-              className="w-full h-full object-cover blur-[120px] opacity-20 scale-110"
-            />
+  const renderProjectRightPage = (projIdx: number, imageIdx = 0, isPageInsideSheet = false) => {
+    const p = projects[projIdx]
+    const activeImg = p.images[imageIdx] || p.images[0]
+    
+    // Internal screenshot carousel handlers
+    const handleNextImg = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      if (isPageInsideSheet) return
+      setCurrentImageIndex((prev) => (prev + 1) % p.images.length)
+    }
+
+    const handlePrevImg = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      if (isPageInsideSheet) return
+      setCurrentImageIndex((prev) => (prev - 1 + p.images.length) % p.images.length)
+    }
+
+    return (
+      <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
+        <div className="absolute inset-0 screentone-subtle opacity-[0.15] pointer-events-none z-0" />
+        
+        <div className="relative z-10 flex flex-col h-full justify-between">
+          {/* Quote Speech Bubble - upgraded from text-xs to text-sm/base font-bold for legibility */}
+          <div className="mb-3 speech-bubble-manga p-3.5 shadow-[2px_2px_0px_#2C2C35] border-2 border-manga-text bg-white">
+            <p className="font-hand text-sm lg:text-base leading-relaxed text-manga-text font-bold">
+              "{p.speech}"
+            </p>
           </div>
 
+          {/* Screenshot Card */}
+          <div className="relative group cursor-zoom-in my-auto">
+            <div className="border-2 border-manga-text overflow-hidden h-[180px] lg:h-[250px] w-full bg-manga-bg relative rounded-xl shadow-[4px_4px_0px_#2C2C35] group-hover:translate-x-[-1px] group-hover:translate-y-[-1px] group-hover:shadow-[6px_6px_0px_#2C2C35] group-hover:border-[2.5px] transition-all duration-300">
+              
+              <img 
+                src={activeImg} 
+                alt={`${p.title} - Screenshot ${imageIdx + 1}`} 
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+              />
+
+              {/* Filmstrip dots indicator inside the screenshot frame - upgraded indicator sizes */}
+              {p.images.length > 1 && (
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 bg-white/95 border border-manga-text px-2.5 py-1 rounded-full shadow-[1px_1px_0px_#2c2c35] z-30">
+                  {p.images.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        if (!isPageInsideSheet) setCurrentImageIndex(dotIdx)
+                      }}
+                      className={`w-2 h-2 rounded-full border border-manga-text transition-colors cursor-pointer ${
+                        imageIdx === dotIdx ? 'bg-manga-accent-red' : 'bg-white'
+                      }`}
+                      title={`Ver captura ${dotIdx + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* Side carousel navigation arrows - upgraded arrow buttons */}
+              {p.images.length > 1 && !isPageInsideSheet && (
+                <>
+                  <button
+                    onClick={handlePrevImg}
+                    className="retro-btn absolute left-2 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full flex items-center justify-center p-0 text-xs font-bold"
+                    title="Imagem Anterior"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={handleNextImg}
+                    className="retro-btn absolute right-2 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full flex items-center justify-center p-0 text-xs font-bold"
+                    title="Próxima Imagem"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+              
+              <div className="absolute inset-0 bg-manga-text/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                <span className="retro-btn px-3 py-1.5 rounded text-xs font-mono flex items-center gap-1.5">
+                  <Maximize2 className="w-3.5 h-3.5" /> Ampliar Captura
+                </span>
+              </div>
+              
+              {!isPageInsideSheet && (
+                <button 
+                  onClick={() => setLightboxImg(activeImg)}
+                  className="absolute inset-0 w-full h-full z-20 cursor-zoom-in"
+                  title="Ver screenshot ampliado"
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Footer Actions - upgraded text */}
+          <div className="mt-4 pt-2 border-t border-manga-text/10 flex justify-between items-center">
+            {isPageInsideSheet ? (
+              <div className="w-2" />
+            ) : (
+              <button 
+                onClick={() => setLightboxImg(activeImg)}
+                className="retro-btn text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 font-mono"
+              >
+                <Maximize2 className="w-3.5 h-3.5" />
+                <span>Ver Ecrã Inteiro</span>
+              </button>
+            )}
+
+            <div className="text-xs font-mono text-manga-text/40 text-right">
+              Pág. {(projIdx * 2) + 2}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // CURRICULUM RENDER HELPERS
+  const renderCurriculumLeftPage = (pageIdx: number, isPageInsideSheet = false) => {
+    if (pageIdx === 0) {
+      return (
+        <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
+          <div className="absolute inset-0 screentone-subtle opacity-[0.12] pointer-events-none z-0" />
+          <div className="relative z-10 flex flex-col h-full justify-between">
+            <div>
+              {/* Header - upgraded */}
+              <div className="flex justify-between items-center border-b border-manga-text/20 pb-2 mb-4">
+                <h3 className="text-lg font-bold font-sans flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-manga-accent-blue" />
+                  <span>Sobre Mim</span>
+                </h3>
+                <span className="text-xs font-mono bg-manga-accent-blue text-white px-2 py-0.5 rounded">
+                  PERFIL
+                </span>
+              </div>
+
+              {/* Bio Paragraph - upgraded to full LaTeX Perfil text */}
+              <div className="text-xs lg:text-[13px] leading-relaxed text-manga-text text-justify space-y-3 mb-4 font-sans">
+                <p className="indent-4 leading-relaxed">
+                  Estudante finalista de Engenharia Informática na UTAD, com uma visão integrada do ciclo de vida de desenvolvimento de software. Demonstro sólida proficiência prática em arquitetura orientada a objetos e ambientes full-stack, com foco particular nos ecossistemas TypeScript/JavaScript e C#.
+                </p>
+                <p className="indent-4 leading-relaxed">
+                  O meu percurso inclui o desenho e implementação de sistemas distribuídos e arquiteturas orientadas a eventos, programação gráfica 3D com WebGL e a modelação avançada de bases de dados relacionais (utilizando PostgreSQL e SQLite). Alinho competências analíticas em engenharia de requisitos e modelação conceptual à proatividade de gerir e alojar as minhas próprias aplicações na cloud. Procuro ingressar no Mestrado do ISEP para consolidar conhecimentos em padrões de desenho e no desenvolvimento de sistemas escaláveis e de alta qualidade.
+                </p>
+              </div>
+
+              {/* UTAD education timeline - updated with LaTeX content and GPA */}
+              <div className="border-t border-manga-text/10 pt-3">
+                <h4 className="text-xs font-mono font-bold text-manga-accent-blue uppercase tracking-wider mb-2">Educação:</h4>
+                <div className="relative border-l border-manga-text/20 pl-4 ml-1">
+                  <div className="relative">
+                    <div className="absolute -left-[20.5px] top-1 w-2.5 h-2.5 rounded-full border border-manga-text bg-manga-sage" />
+                    <span className="text-xs font-mono font-bold text-manga-sage block">
+                      Set 2023 -- Jul 2026 (Previsão)
+                    </span>
+                    <h5 className="font-sans font-bold text-sm text-manga-text">
+                      Licenciatura em Engenharia Informática
+                    </h5>
+                    <p className="text-xs text-manga-text/60">
+                      Universidade de Trás-os-Montes e Alto Douro (UTAD)
+                    </p>
+                    <ul className="text-[11px] font-sans text-manga-text/75 mt-1 list-disc pl-4 space-y-0.5">
+                      <li>Desenvolvimento de competências nucleares em algoritmos, arquitetura de sistemas e engenharia de requisitos.</li>
+                      <li className="font-bold text-manga-accent-red">Média atual: 14 valores.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-xs font-mono text-manga-text/40 pt-3">
+              Pág. 1
+            </div>
+          </div>
+        </div>
+      )
+    } else {
+      // Contacts Page - upgraded
+      return (
+        <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
+          <div className="absolute inset-0 screentone-subtle opacity-[0.12] pointer-events-none z-0" />
+          
+          <div className="relative z-10 flex flex-col h-full justify-between">
+            <div>
+              {/* Header */}
+              <div className="flex justify-between items-center border-b border-manga-text/20 pb-2 mb-4">
+                <h3 className="text-lg font-bold font-sans flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-manga-accent-blue" />
+                  <span>Contacto Direto</span>
+                </h3>
+                <span className="text-xs font-mono bg-manga-yellow border border-manga-text px-2.5 py-0.5 rounded text-manga-text font-bold">
+                  VOLUME 2
+                </span>
+              </div>
+
+              <p className="text-sm text-manga-text/70 mb-4 leading-relaxed">
+                Estou inteiramente disponível para partilha de projetos, dúvidas académicas ou propostas de colaboração.
+              </p>
+
+              {/* Email Copy Area */}
+              <div className="border border-manga-text/20 p-3 bg-manga-bg/40 rounded-xl mb-4 relative">
+                <span className="text-[10px] font-mono font-bold text-manga-text/50 uppercase tracking-widest block mb-0.5">Email profissional:</span>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm font-mono text-manga-text font-bold truncate select-all">pm7703125@gmail.com</span>
+                  
+                  {!isPageInsideSheet && (
+                    <button 
+                      onClick={copyEmail}
+                      className={`retro-btn px-3 py-1.5 text-xs flex items-center gap-1 rounded-md ${copied ? 'bg-manga-accent-red-light border-manga-accent-red text-manga-accent-red' : ''}`}
+                    >
+                      {copied ? <Check className="w-3.5 h-3.5 text-manga-accent-red" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copied ? 'Copiado!' : 'Copiar'}</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Social items - upgraded to text-sm */}
+              <div className="space-y-3 text-sm font-mono">
+                <a href="tel:+351914271784" className="flex items-center gap-2 text-manga-text hover:underline">
+                  <Phone className="w-4 h-4 text-manga-accent-blue" />
+                  <span>+351 914 271 784</span>
+                </a>
+                <a href="https://github.com/Braz55" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-manga-text hover:underline">
+                  <Github className="w-4 h-4 text-manga-accent-blue" />
+                  <span>github.com/Braz55</span>
+                </a>
+                <div className="text-xs text-manga-text/40 pt-3 leading-normal font-sans">
+                  Localização: Mirandela, Portugal
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-xs font-mono text-manga-text/40 pt-3">
+              Pág. 3
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  const renderCurriculumRightPage = (pageIdx: number, _isPageInsideSheet = false) => {
+    if (pageIdx === 0) {
+      return (
+        <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
+          <div className="absolute inset-0 screentone-subtle opacity-[0.12] pointer-events-none z-0" />
+          <div className="relative z-10 flex flex-col h-full justify-between">
+            <div>
+              {/* Header */}
+              <div className="flex justify-between items-center border-b border-manga-text/20 pb-2 mb-4">
+                <h3 className="text-lg font-bold font-sans flex items-center gap-2">
+                  <Code className="w-5 h-5 text-manga-accent-red" />
+                  <span>Foco Técnico &amp; Competências</span>
+                </h3>
+                <span className="text-xs font-mono bg-manga-accent-red text-white px-2 py-0.5 rounded">
+                  SKILLS
+                </span>
+              </div>
+
+              {/* Skill tags - updated with LaTeX content */}
+              <div className="space-y-3.5">
+                {skillCategories.map((cat, idx) => (
+                  <div key={idx} className="border border-manga-text/20 p-2 rounded-xl bg-manga-bg/30">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      {cat.icon}
+                      <h4 className="font-sans font-bold text-xs text-manga-text uppercase tracking-wider">
+                        {cat.title}
+                      </h4>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {cat.skills.map((skill, sIdx) => (
+                        <span 
+                          key={sIdx} 
+                          className="px-2 py-0.5 rounded bg-white border border-manga-text/30 text-xs text-manga-text font-mono font-medium"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="text-xs font-mono text-manga-text/40 pt-3 text-right">
+              Pág. 2
+            </div>
+          </div>
+        </div>
+      )
+    } else {
+      // Ambitions page - upgraded text-sm
+      return (
+        <div className="w-full h-full p-6 lg:p-8 flex flex-col justify-between bg-white relative overflow-y-auto lg:overflow-visible">
+          <div className="absolute inset-0 screentone-subtle opacity-[0.12] pointer-events-none z-0" />
+          
+          <div className="relative z-10 flex flex-col h-full justify-between">
+            <div>
+              {/* Header */}
+              <div className="flex justify-between items-center border-b border-manga-text/20 pb-2 mb-4">
+                <h3 className="text-lg font-bold font-sans flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-manga-yellow" />
+                  <span>Metas &amp; Ambições</span>
+                </h3>
+                <span className="text-xs font-mono bg-manga-text text-white px-2.5 py-0.5 rounded">
+                  FIM
+                </span>
+              </div>
+
+              {/* Ambition checkboxes - upgraded to text-sm */}
+              <ul className="text-[13px] lg:text-sm font-sans space-y-3 text-manga-text pl-1 mb-4">
+                <li className="flex gap-2 items-start">
+                  <span className="text-manga-accent-blue font-bold text-base leading-none">✓</span>
+                  <span>Consolidar e expandir projetos de código aberto (Open Source).</span>
+                </li>
+                <li className="flex gap-2 items-start">
+                  <span className="text-manga-accent-blue font-bold text-base leading-none">✓</span>
+                  <span>Projetar arquiteturas tolerantes a falhas em sistemas gRPC e RabbitMQ de telemetria.</span>
+                </li>
+                <li className="flex gap-2 items-start">
+                  <span className="text-manga-accent-blue font-bold text-base leading-none">✓</span>
+                  <span>Explorar a aplicação prática de IA offline acoplada ao NestJS e React.</span>
+                </li>
+              </ul>
+
+              <div className="border-t border-manga-text/10 pt-4 text-center">
+                <span className="text-[10px] font-hand text-manga-text/50 block">
+                  "O código limpo é como um livro bem escrito."
+                </span>
+                <span className="text-xs font-mono font-bold text-manga-accent-red mt-1 block">
+                  -- Pedro Braz
+                </span>
+              </div>
+            </div>
+            
+            <div className="text-xs font-mono text-manga-text/40 pt-3 text-right">
+              Pág. 4
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
+  // INDEX LOGIC SELECTORS FOR DUAL-PAGE VIEW
+  const leftProjectIdx = isFlipping && flipDirection === 'next' && oldProjectIndex !== null ? oldProjectIndex : currentProjectIndex
+  const rightProjectIdx = isFlipping && flipDirection === 'prev' && oldProjectIndex !== null ? oldProjectIndex : currentProjectIndex
+
+  const leftCurriculumPage = isFlipping && flipDirection === 'next' && oldCurriculumPage !== null ? oldCurriculumPage : currentCurriculumPage
+  const rightCurriculumPage = isFlipping && flipDirection === 'prev' && oldCurriculumPage !== null ? oldCurriculumPage : currentCurriculumPage
+
+  return (
+    <div className="min-h-screen bg-manga-bg text-manga-text flex flex-col items-center selection:bg-manga-accent-red-light selection:text-manga-accent-red pb-12 relative px-4 md:px-6 lg:px-8">
+      
+      {/* BACKGROUND DECORATIONS (Hand-drawn look) */}
+      <div className="absolute top-12 left-6 opacity-20 select-none hidden lg:block animate-float-slow pointer-events-none">
+        <svg width="45" height="45" viewBox="0 0 100 100" fill="none" stroke="#2C2C35" strokeWidth="2">
+          <path d="M50 10 L55 45 L90 50 L55 55 L50 90 L45 55 L10 50 L45 45 Z" />
+        </svg>
+      </div>
+
+      <div className="absolute top-72 right-6 opacity-20 select-none hidden lg:block animate-float pointer-events-none">
+        <svg width="60" height="60" viewBox="0 0 100 100" fill="none" stroke="#2C2C35" strokeWidth="2">
+          <circle cx="50" cy="50" r="30" strokeDasharray="6 6" />
+          <path d="M50 10 L50 90 M10 50 L90 50" />
+        </svg>
+      </div>
+
+      {/* 1. HERO SECTION - Wider max-w and tighter margins */}
+      <header className="w-full max-w-[1200px] mt-6 lg:mt-10 flex flex-col lg:flex-row items-center gap-6 lg:gap-10 pb-8 border-b border-manga-text/10">
+        
+        {/* Float Avatar Container */}
+        <div className="relative flex-shrink-0 animate-float">
+          {/* Handwritten badge above avatar */}
+          <div className="absolute -top-5 -right-5 bg-manga-yellow text-manga-text border-2 border-manga-text px-2.5 py-0.5 text-[11px] font-hand font-bold rotate-6 shadow-[2px_2px_0px_#2C2C35]">
+            Finalista UTAD!
+          </div>
+          
+          <div className="w-36 h-36 lg:w-40 lg:h-40 rounded-2xl border-2 border-manga-text bg-white overflow-hidden p-1.5 shadow-[4px_4px_0px_#2C2C35]">
+            <img 
+              src="/avatar_manga.png" 
+              alt="Pedro Braz Avatar Manga" 
+              className="w-full h-full object-cover rounded-xl grayscale hover:grayscale-0 transition-all duration-500"
+            />
+          </div>
+          <div className="w-32 h-2.5 bg-manga-text/10 rounded-full blur-[2px] mx-auto mt-3 animate-pulse" />
+        </div>
+
+        {/* Hero Bio & Dialogue Bubble */}
+        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+          
+          {/* Custom Manga speech bubble */}
+          <div className="mb-4 speech-bubble-manga lg:speech-bubble-left p-4 max-w-xl lg:max-w-2xl shadow-[2px_2px_0px_#2C2C35] border-2 border-manga-text bg-white">
+            <div className="absolute -top-3 left-4 px-2 py-0.5 bg-manga-text text-[8px] font-mono rounded tracking-widest uppercase">
+              STATUS: LEITURA 3D
+            </div>
+            <p className="font-sans text-xs md:text-sm leading-relaxed text-manga-text font-medium">
+              "Olá! Sou o <span className="font-bold text-manga-accent-red underline decoration-wavy decoration-1">Pedro Braz</span>, Software Engineer. Estruturei o portefólio com um efeito de **Viragem de Página 3D real**! Clica nos botões de rodapé para veres a folha a desfolhar."
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center lg:items-start">
+            <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight font-sans text-manga-text">
+              Pedro Braz
+            </h1>
+            <p className="text-xs font-mono text-manga-accent-blue font-bold uppercase mt-0.5 tracking-wider flex items-center gap-1.5">
+              <span>&lt;</span> Software Engineer &amp; Full-Stack Builder <span>/&gt;</span>
+            </p>
+          </div>
+
+          {/* Social / Contact Retro Buttons Row */}
+          <div className="flex flex-wrap gap-2.5 mt-4 justify-center lg:justify-start">
+            <a 
+              href="https://github.com/Braz55" 
+              target="_blank" 
+              rel="noreferrer"
+              className="retro-btn px-3.5 py-1.5 text-xs flex items-center gap-1.5 rounded-lg"
+            >
+              <Github className="w-3.5 h-3.5" />
+              <span>GitHub</span>
+            </a>
+            
+            <a 
+              href="tel:+351914271784" 
+              className="retro-btn px-3.5 py-1.5 text-xs flex items-center gap-1.5 rounded-lg"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>Ligar</span>
+            </a>
+
+            <div className="relative">
+              <button 
+                onClick={copyEmail}
+                className={`retro-btn px-3.5 py-1.5 text-xs flex items-center gap-1.5 rounded-lg ${copied ? 'bg-manga-accent-red-light border-manga-accent-red text-manga-accent-red' : ''}`}
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-manga-accent-red" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copied ? 'Copiado!' : 'Copiar Email'}</span>
+              </button>
+              {copied && (
+                <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 bg-manga-text text-white text-[8px] font-mono px-2 py-0.5 rounded shadow whitespace-nowrap animate-bounce z-30">
+                  pm7703125@gmail.com
+                </div>
+              )}
+            </div>
+
+            <button 
+              onClick={downloadLaTeX}
+              className="retro-btn px-3.5 py-1.5 text-xs flex items-center gap-1.5 rounded-lg bg-white"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Baixar CV (LaTeX)</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* 2. TABS NAVIGATION - Wider max-w and tighter margins */}
+      <nav className="w-full max-w-[1200px] my-5 lg:my-6 flex justify-center gap-3">
+        <button 
+          onClick={() => switchTab('projetos')}
+          className={`retro-btn px-5 py-2 rounded-xl text-xs tracking-wider uppercase transition-all flex items-center gap-2 ${activeTab === 'projetos' ? 'bg-manga-accent-blue text-white shadow-[1px_1px_0px_#2C2C35] translate-x-[2px] translate-y-[2px]' : ''}`}
+        >
+          <span>📖</span>
+          <span>Livro de Projetos</span>
+        </button>
+        
+        <button 
+          onClick={() => switchTab('curriculo')}
+          className={`retro-btn px-5 py-2 rounded-xl text-xs tracking-wider uppercase transition-all flex items-center gap-2 ${activeTab === 'curriculo' ? 'bg-manga-accent-red text-white shadow-[1px_1px_0px_#2C2C35] translate-x-[2px] translate-y-[2px]' : ''}`}
+        >
+          <span>📓</span>
+          <span>Caderno de Currículo</span>
+        </button>
+      </nav>
+
+      {/* 3. DYNAMIC CONTENT: OPEN BOOK CONTAINER - Responsive width adaptation */}
+      <main className="w-full max-w-[1200px] px-0 md:px-2 lg:px-4">
+        
+        {/* PROJECTS BOOK */}
+        {activeTab === 'projetos' && (
+          <div className="flex flex-col gap-5">
+            
+            {/* The Book Body with 3D perspective - Desktop set heights, mobile stacked */}
+            <div className="book-container flex flex-col lg:flex-row relative min-h-[480px] lg:h-[560px] bg-white overflow-visible">
+              
+              {/* Central Spine/Crease */}
+              <div className="book-crease hidden lg:block" />
+
+              {/* BACKGROUND LEFT PAGE: Shows details */}
+              <div className="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-manga-text/20 relative overflow-hidden rounded-l-2xl">
+                {renderProjectLeftPage(leftProjectIdx)}
+              </div>
+
+              {/* BACKGROUND RIGHT PAGE: Shows image */}
+              <div className="w-full lg:w-1/2 relative overflow-hidden rounded-r-2xl">
+                {renderProjectRightPage(rightProjectIdx, rightProjectIdx === currentProjectIndex ? currentImageIndex : oldImageIndex)}
+              </div>
+
+              {/* 3D TURNING SHEET OVERLAY (VISIBLE ONLY DURING FLIPPING ON DESKTOP) */}
+              {isFlipping && oldProjectIndex !== null && (
+                <>
+                  {/* NEXT PAGE SHEET (Flips right to left) */}
+                  {flipDirection === 'next' && (
+                    <div className="absolute top-0 bottom-0 left-1/2 w-1/2 z-40 transform-style-3d origin-center-spine-left animate-flip-sheet-next hidden lg:block pointer-events-none">
+                      
+                      {/* FRONT FACE (displays old project right page) */}
+                      <div className="absolute inset-0 backface-hidden border-l border-manga-text/10 rounded-r-2xl overflow-hidden bg-white">
+                        {renderProjectRightPage(oldProjectIndex, oldImageIndex, true)}
+                      </div>
+                      
+                      {/* BACK FACE (displays new project left page) */}
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 border-r border-manga-text/10 rounded-l-2xl overflow-hidden bg-white">
+                        {renderProjectLeftPage(currentProjectIndex, true)}
+                      </div>
+                      
+                    </div>
+                  )}
+
+                  {/* PREV PAGE SHEET (Flips left to right) */}
+                  {flipDirection === 'prev' && (
+                    <div className="absolute top-0 bottom-0 left-0 w-1/2 z-40 transform-style-3d origin-center-spine-right animate-flip-sheet-prev hidden lg:block pointer-events-none">
+                      
+                      {/* FRONT FACE (displays old project left page) */}
+                      <div className="absolute inset-0 backface-hidden border-r border-manga-text/10 rounded-l-2xl overflow-hidden bg-white">
+                        {renderProjectLeftPage(oldProjectIndex, true)}
+                      </div>
+                      
+                      {/* BACK FACE (displays new project right page) */}
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 border-l border-manga-text/10 rounded-r-2xl overflow-hidden bg-white">
+                        {renderProjectRightPage(currentProjectIndex, 0, true)}
+                      </div>
+                      
+                    </div>
+                  )}
+                </>
+              )}
+
+            </div>
+
+            {/* Book flipping navigation controls (Retro physical buttons) */}
+            <div className="flex justify-between items-center mt-1 px-1">
+              <button 
+                onClick={handlePrevProject}
+                disabled={currentProjectIndex === 0 || isFlipping}
+                className={`retro-btn px-3.5 py-2 rounded-xl text-xs flex items-center gap-1 ${currentProjectIndex === 0 ? 'opacity-40 cursor-not-allowed shadow-[0px_0px_0px_#2c2c35] translate-x-[3px] translate-y-[3px]' : ''}`}
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+                <span>Página Anterior</span>
+              </button>
+
+              <div className="text-[11px] font-mono font-bold text-manga-text bg-white border-2 border-manga-text px-3.5 py-1.5 rounded-xl shadow-[2px_2px_0px_#2C2C35]">
+                Volume 1 &bull; Projeto {currentProjectIndex + 1} de {projects.length}
+              </div>
+
+              <button 
+                onClick={handleNextProject}
+                disabled={currentProjectIndex === projects.length - 1 || isFlipping}
+                className={`retro-btn px-3.5 py-2 rounded-xl text-xs flex items-center gap-1 ${currentProjectIndex === projects.length - 1 ? 'opacity-40 cursor-not-allowed shadow-[0px_0px_0px_#2c2c35] translate-x-[3px] translate-y-[3px]' : ''}`}
+              >
+                <span>Próxima Página</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+          </div>
+        )}
+
+        {/* CURRICULUM BOOK */}
+        {activeTab === 'curriculo' && (
+          <div className="flex flex-col gap-5">
+            
+            {/* The Book Body with 3D perspective - Desktop set heights, mobile stacked */}
+            <div className="book-container flex flex-col lg:flex-row relative min-h-[480px] lg:h-[560px] bg-white overflow-visible">
+              
+              {/* Central Spine/Crease */}
+              <div className="book-crease hidden lg:block" />
+
+              {/* BACKGROUND LEFT PAGE */}
+              <div className="w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-manga-text/20 relative overflow-hidden rounded-l-2xl">
+                {renderCurriculumLeftPage(leftCurriculumPage)}
+              </div>
+
+              {/* BACKGROUND RIGHT PAGE */}
+              <div className="w-full lg:w-1/2 relative overflow-hidden rounded-r-2xl">
+                {renderCurriculumRightPage(rightCurriculumPage)}
+              </div>
+
+              {/* 3D TURNING SHEET OVERLAY (VISIBLE ONLY DURING FLIPPING ON DESKTOP) */}
+              {isFlipping && oldCurriculumPage !== null && (
+                <>
+                  {/* NEXT PAGE SHEET (Flips right to left) */}
+                  {flipDirection === 'next' && (
+                    <div className="absolute top-0 bottom-0 left-1/2 w-1/2 z-40 transform-style-3d origin-center-spine-left animate-flip-sheet-next hidden lg:block pointer-events-none">
+                      
+                      {/* FRONT FACE (displays old curriculum page 2 / right) */}
+                      <div className="absolute inset-0 backface-hidden border-l border-manga-text/10 rounded-r-2xl overflow-hidden bg-white">
+                        {renderCurriculumRightPage(oldCurriculumPage, true)}
+                      </div>
+                      
+                      {/* BACK FACE (displays new curriculum page 3 / left) */}
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 border-r border-manga-text/10 rounded-l-2xl overflow-hidden bg-white">
+                        {renderCurriculumLeftPage(currentCurriculumPage, true)}
+                      </div>
+                      
+                    </div>
+                  )}
+
+                  {/* PREV PAGE SHEET (Flips left to right) */}
+                  {flipDirection === 'prev' && (
+                    <div className="absolute top-0 bottom-0 left-0 w-1/2 z-40 transform-style-3d origin-center-spine-right animate-flip-sheet-prev hidden lg:block pointer-events-none">
+                      
+                      {/* FRONT FACE (displays old curriculum page 3 / left) */}
+                      <div className="absolute inset-0 backface-hidden border-r border-manga-text/10 rounded-l-2xl overflow-hidden bg-white">
+                        {renderCurriculumLeftPage(oldCurriculumPage, true)}
+                      </div>
+                      
+                      {/* BACK FACE (displays new curriculum page 2 / right) */}
+                      <div className="absolute inset-0 backface-hidden rotate-y-180 border-l border-manga-text/10 rounded-r-2xl overflow-hidden bg-white">
+                        {renderCurriculumRightPage(currentCurriculumPage, true)}
+                      </div>
+                      
+                    </div>
+                  )}
+                </>
+              )}
+
+            </div>
+
+            {/* Book flipping navigation controls (Retro physical buttons) */}
+            <div className="flex justify-between items-center mt-1 px-1">
+              <button 
+                onClick={handlePrevCurriculum}
+                disabled={currentCurriculumPage === 0 || isFlipping}
+                className={`retro-btn px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 ${currentCurriculumPage === 0 ? 'opacity-40 cursor-not-allowed shadow-[0px_0px_0px_#2c2c35] translate-x-[3px] translate-y-[3px]' : ''}`}
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+                <span>Página Anterior</span>
+              </button>
+
+              <div className="text-[11px] font-mono font-bold text-manga-text bg-white border-2 border-manga-text px-4 py-1.5 rounded-xl shadow-[2px_2px_0px_#2C2C35]">
+                Volume 2 &bull; Folha {currentCurriculumPage + 1} de 2
+              </div>
+
+              <button 
+                onClick={handleNextCurriculum}
+                disabled={currentCurriculumPage === 1 || isFlipping}
+                className={`retro-btn px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 ${currentCurriculumPage === 1 ? 'opacity-40 cursor-not-allowed shadow-[0px_0px_0px_#2c2c35] translate-x-[3px] translate-y-[3px]' : ''}`}
+              >
+                <span>Próxima Página</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+          </div>
+        )}
+
+      </main>
+
+      {/* 4. LIGHTBOX COMPONENT FOR PREVIEW */}
+      {lightboxImg && (
+        <div 
+          onClick={() => setLightboxImg(null)}
+          className="fixed inset-0 z-50 bg-[#2C2C35]/95 flex flex-col items-center justify-center p-4 cursor-zoom-out select-none"
+        >
+          {/* Close button */}
           <button 
-            className="absolute top-6 right-6 p-3 rounded-full bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-white hover:border-indigo-500 hover:scale-105 transition-all shadow-2xl z-[120] cursor-pointer"
-            onClick={() => setLightboxOpen(false)}
-            title="Fechar Visualização (Esc)"
+            onClick={() => setLightboxImg(null)}
+            className="absolute top-6 right-6 retro-btn p-2 rounded-full cursor-pointer hover:scale-105 transition-transform"
           >
             <X className="w-6 h-6" />
           </button>
-
-          {/* Lightbox Navigation Buttons */}
-          {activeProject.images.length > 1 && (
-            <>
-              <button
-                onClick={(e) => handlePrevImage(e, activeProject.images.length)}
-                className="absolute left-6 top-1/2 -translate-y-1/2 p-4 rounded-full bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-indigo-500 hover:scale-105 transition-all shadow-2xl z-[120] cursor-pointer backdrop-blur-md"
-                title="Imagem Anterior (Seta Esquerda)"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={(e) => handleNextImage(e, activeProject.images.length)}
-                className="absolute right-6 top-1/2 -translate-y-1/2 p-4 rounded-full bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:border-indigo-500 hover:scale-105 transition-all shadow-2xl z-[120] cursor-pointer backdrop-blur-md"
-                title="Próxima Imagem (Seta Direita)"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </>
-          )}
-
-          {/* Fullscreen Image Container */}
-          <div className="relative max-w-full max-h-[75vh] flex items-center justify-center z-10 p-2">
+          
+          {/* Framed preview panel */}
+          <div className="relative max-w-full max-h-[85vh] p-2.5 bg-white border-4 border-manga-text shadow-[8px_8px_0px_#2C2C35] rounded-2xl">
             <img 
-              src={activeProject.images[imageIndex]} 
-              alt={`${activeProject.title} fullscreen preview`} 
-              className="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl border border-white/10 hover:scale-[1.005] transition-transform duration-300"
-              onClick={(e) => e.stopPropagation()}
+              src={lightboxImg} 
+              alt="Ampliação do Painel" 
+              className="max-w-full max-h-[75vh] object-contain rounded-xl border border-manga-text/20"
             />
-            {/* Top center details info inside lightbox */}
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-slate-900/90 border border-slate-800 px-4 py-1.5 rounded-full text-xs text-slate-300 font-mono shadow-xl flex items-center gap-2 select-none">
-              <span className="font-semibold text-white">{activeProject.title}</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-indigo-400">{imageIndex + 1} de {activeProject.images.length}</span>
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-manga-text text-white border-2 border-white text-xs font-mono px-4 py-1 rounded-full uppercase tracking-wider">
+              Manga Panel Snapshot
+            </div>
+            
+            <div className="mt-2.5 text-center text-xs font-hand text-manga-text/50 font-bold">
+              (Clica fora ou no botão X para fechar a visualização)
             </div>
           </div>
-
-          {/* Lightbox Filmstrip */}
-          {activeProject.images.length > 1 && (
-            <div 
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2.5 px-5 py-3 bg-slate-900/90 border border-slate-800/80 rounded-2xl max-w-[85%] overflow-x-auto z-[120] shadow-2xl backdrop-blur-md select-none"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {activeProject.images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={(e) => { e.stopPropagation(); setImageIndex(idx) }}
-                  className={`relative w-14 h-9 md:w-18 md:h-11 rounded-lg overflow-hidden transition-all duration-200 flex-shrink-0 cursor-pointer ${
-                    imageIndex === idx 
-                      ? "ring-2 ring-indigo-500 scale-105 opacity-100 shadow-md shadow-indigo-500/30" 
-                      : "opacity-40 hover:opacity-85 hover:scale-102"
-                  }`}
-                >
-                  <img src={img} alt={`Miniatura ${idx + 1}`} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="absolute bottom-0 left-0 right-0 border-t border-slate-900/60 py-6 text-center text-xs text-slate-600">
-        <p>&copy; {new Date().getFullYear()} Pedro Braz. Desenvolvido com React, TypeScript e Tailwind CSS v4.</p>
+      {/* FOOTER */}
+      <footer className="w-full max-w-[1200px] mt-10 border-t-2 border-manga-text/10 pt-6 flex flex-col md:flex-row justify-between items-center text-manga-text/50 text-xs font-mono">
+        <div>
+          <span>EDITORA BR55</span>
+          <span className="mx-2">&bull;</span>
+          <span>VOLUME 1 &bull; MANGA REDESIGN</span>
+        </div>
+        <div className="mt-2 md:mt-0 font-hand text-sm font-bold text-manga-text/40">
+          Feito com ☕ e código limpo &bull; Mirandela 2026
+        </div>
       </footer>
     </div>
   )
 }
-
-export default App

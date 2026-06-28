@@ -1,179 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&family=Architects+Daughter&family=Gaegu:wght@400;700&display=swap');
+
 @import "tailwindcss";
 
+@theme {
+  --color-manga-bg: #F7F5F0;
+  --color-manga-text: #2C2C35;
+  --color-manga-accent-blue: #78909C;
+  --color-manga-accent-blue-dark: #546E7A;
+  --color-manga-accent-red: #C05C54;
+  --color-manga-accent-red-light: #F5EBEA;
+  --color-manga-sage: #8FA89B;
+  --color-manga-yellow: #E8C580;
+  
+  --font-sans: "Quicksand", system-ui, -apple-system, sans-serif;
+  --font-mono: "Fira Code", monospace;
+  --font-hand: "Architects Daughter", cursive;
+  --font-comic: "Gaegu", cursive;
+}
+
 @layer base {
-  :root {
-    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  body {
+    background-color: #F7F5F0;
+    color: #2C2C35;
+    font-family: "Quicksand", system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 }
 
-body {
-  font-family: var(--font-sans);
-  background-color: #030712;
-  color: #cbd5e1;
-  overflow-x: hidden;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F5F0;
+  border-left: 2px solid #2C2C35;
+}
+::-webkit-scrollbar-thumb {
+  background: #2C2C35;
+  border: 2px solid #F7F5F0;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #546E7A;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
+/* Screentone patterns */
+.screentone-subtle {
+  background-image: radial-gradient(rgba(44, 44, 53, 0.08) 1.2px, transparent 1.2px);
+  background-size: 6px 6px;
 }
 
-/* Premium radial backdrop gradients */
-.bg-grid-mesh {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+.screentone-medium {
+  background-image: radial-gradient(rgba(44, 44, 53, 0.18) 1.2px, transparent 1.2px);
+  background-size: 6px 6px;
 }
 
-/* Glassmorphism elements */
-.glass-card {
-  background: linear-gradient(135deg, rgba(17, 24, 39, 0.5) 0%, rgba(3, 7, 18, 0.7) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+/* Retro physical buttons */
+.retro-btn {
+  background-color: #FFFFFF;
+  border: 2px solid #2C2C35;
+  color: #2C2C35;
+  box-shadow: 3px 3px 0px #2C2C35;
+  transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  user-select: none;
+  font-weight: 700;
 }
 
-.glass-card-hover {
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+.retro-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #2C2C35;
 }
 
-.glass-card-hover:hover {
-  background: linear-gradient(135deg, rgba(17, 24, 39, 0.7) 0%, rgba(3, 7, 18, 0.9) 100%);
-  border-color: rgba(99, 102, 241, 0.35);
-  box-shadow: 
-    0 30px 60px -15px rgba(0, 0, 0, 0.8), 
-    0 0 50px -10px rgba(99, 102, 241, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transform: translateY(-6px) scale(1.005);
+.retro-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px #2C2C35;
 }
 
-/* macOS Terminal frame */
-.terminal-bar {
-  background: rgba(15, 23, 42, 0.8);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+/* Manga panels (bouncy effect) */
+.manga-panel {
+  background-color: #FFFFFF;
+  border: 2px solid #2C2C35;
+  box-shadow: 4px 4px 0px #2C2C35;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.terminal-dot {
+.manga-panel:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 8px 8px 0px #2C2C35;
+  border-width: 3px;
+}
+
+/* Open Book Container Styles */
+.book-container {
+  background-color: #FFFFFF;
+  border: 3px solid #2C2C35;
+  box-shadow: 6px 6px 0px #2C2C35;
+  position: relative;
+  border-radius: 16px;
+  perspective: 1500px; /* 3D perspective space */
+  transform-style: preserve-3d;
+}
+
+/* Book binding spine crease */
+.book-crease {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
   width: 12px;
-  height: 12px;
-  border-radius: 9999px;
-  display: inline-block;
-}
-
-.terminal-dot-close { background-color: #ef4444; }
-.terminal-dot-minimize { background-color: #f59e0b; }
-.terminal-dot-zoom { background-color: #10b981; }
-
-/* Glow spots */
-.glow-purple {
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, rgba(3, 7, 18, 0) 70%);
-}
-
-.glow-blue {
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(3, 7, 18, 0) 70%);
-}
-
-.glow-indigo {
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(3, 7, 18, 0) 70%);
-}
-
-.glow-teal {
-  background: radial-gradient(circle, rgba(20, 184, 166, 0.12) 0%, rgba(3, 7, 18, 0) 70%);
-}
-
-/* Fancy Glowing Badges */
-.badge-glow {
-  box-shadow: 0 0 15px -3px rgba(99, 102, 241, 0.4);
-}
-
-/* Shimmer Text Effect */
-.shimmer-text-premium {
+  transform: translateX(-50%);
   background: linear-gradient(
-    to right,
-    #ffffff 10%,
-    #a5b4fc 35%,
-    #818cf8 60%,
-    #ffffff 85%
+    90deg,
+    rgba(44, 44, 53, 0.05) 0%,
+    rgba(44, 44, 53, 0.2) 30%,
+    rgba(44, 44, 53, 0.28) 50%,
+    rgba(44, 44, 53, 0.2) 70%,
+    rgba(44, 44, 53, 0.05) 100%
   );
-  background-size: 200% auto;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: shine 8s linear infinite;
+  border-left: 1px solid rgba(44, 44, 53, 0.15);
+  border-right: 1px solid rgba(44, 44, 53, 0.15);
+  pointer-events: none;
+  z-index: 30;
 }
 
-@keyframes shine {
-  to {
-    background-position: 200% center;
+/* 3D Page Flip Utilities */
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* 3D Keyframe Animations for turning pages (180deg rotation) */
+@keyframes flip-next-sheet {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-180deg);
   }
 }
 
-/* Floating animation */
+@keyframes flip-prev-sheet {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+.animate-flip-sheet-next {
+  animation: flip-next-sheet 0.6s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+  transform-style: preserve-3d;
+}
+
+.animate-flip-sheet-prev {
+  animation: flip-prev-sheet 0.6s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+  transform-style: preserve-3d;
+}
+
+.origin-center-spine-left {
+  transform-origin: left center;
+}
+
+.origin-center-spine-right {
+  transform-origin: right center;
+}
+
+/* Speed lines effect inside header banners */
+.manga-speed-lines {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(44, 44, 53, 0.04),
+    rgba(44, 44, 53, 0.04) 1px,
+    transparent 1px,
+    transparent 15px
+  );
+}
+
+/* Animations */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-12px) rotate(1deg);
+    transform: translateY(-8px) rotate(1.5deg);
   }
 }
 
-.animate-float-premium {
-  animation: float 8s ease-in-out infinite;
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
 
-.animate-float-premium-delayed {
-  animation: float 8s ease-in-out infinite;
-  animation-delay: 4s;
-}
-
-/* Smooth Fade In Up Entrance Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(-1deg);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  50% {
+    transform: translateY(-5px) rotate(1deg);
   }
 }
 
-.animate-fade-in-up-premium {
-  opacity: 0;
-  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
 }
 
-.animation-delay-100 { animation-delay: 100ms; }
-.animation-delay-200 { animation-delay: 200ms; }
-.animation-delay-300 { animation-delay: 300ms; }
-.animation-delay-450 { animation-delay: 450ms; }
-.animation-delay-600 { animation-delay: 600ms; }
-.animation-delay-800 { animation-delay: 800ms; }
-
-/* Scroll reveal helper class */
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+/* Notebook lines for CV section */
+.notebook-lines {
+  background-image: linear-gradient(rgba(44, 44, 53, 0.1) 1px, transparent 1px);
+  background-size: 100% 24px;
+  line-height: 24px;
 }
 
-.reveal-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
+/* Manga styled speech bubble */
+.speech-bubble-manga {
+  position: relative;
+  background: #FFFFFF;
+  border: 2px solid #2C2C35;
+  border-radius: 12px;
 }
 
-/* Lightbox Fade In */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.speech-bubble-manga::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 30px;
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-top-color: #2C2C35;
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -6px;
+  margin-bottom: -12px;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.25s ease-out forwards;
+.speech-bubble-manga::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 30px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #FFFFFF;
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -5px;
+  margin-bottom: -10px;
+  z-index: 1;
+}
+
+/* Left pointing speech bubble */
+.speech-bubble-left {
+  position: relative;
+  background: #FFFFFF;
+  border: 2px solid #2C2C35;
+  border-radius: 12px;
+}
+
+.speech-bubble-left::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 12px solid transparent;
+  border-right-color: #2C2C35;
+  border-left: 0;
+  margin-top: -12px;
+  margin-left: -12px;
+}
+
+.speech-bubble-left::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-right-color: #FFFFFF;
+  border-left: 0;
+  margin-top: -10px;
+  margin-left: -10px;
+  z-index: 1;
 }
