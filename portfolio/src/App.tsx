@@ -26,7 +26,7 @@ const projects = [
   {
     id: "project-pilot",
     title: "ProjectPilot",
-    subtitle: "Parceria de Investigação com o INESC TEC (Repositório Privado)",
+    subtitle: "Projeto Final de Licenciatura em parceria com o INESC TEC (Repositório Privado)",
     tags: ["Llama 3.1", "RAG", "Python", "Open WebUI", "Semantic Search"],
     period: "2026",
     details: [
@@ -81,6 +81,7 @@ const projects = [
       "/image/isDistribuidos/2.png",
       "/image/isDistribuidos/3.png"
     ],
+    githubUrl: "https://github.com/todfilipe/TP1-SISTEMAS-DISTRIBUIDOS",
     icon: <Cpu className="w-5 h-5 text-manga-text" />,
     speech: "Mensagens assíncronas de alto desempenho conectando microsserviços!",
     chapter: "Capítulo 3: Microsserviços e IoT"
@@ -719,7 +720,7 @@ export default function App() {
               STATUS: LEITURA 3D
             </div>
             <p className="font-sans text-xs md:text-sm leading-relaxed text-manga-text font-medium">
-              "Olá! Sou o <span className="font-bold text-manga-accent-red underline decoration-wavy decoration-1">Pedro Braz</span>, Software Engineer. Estruturei o portefólio com um efeito de **Viragem de Página 3D real**! Clica nos botões de rodapé para veres a folha a desfolhar."
+              "Olá! Sou o <span className="font-bold text-manga-accent-red underline decoration-wavy decoration-1">Pedro Braz</span>, Junior Software Engineer. Bem-vindo ao meu espaço interativo. Explora as secções abaixo para conheceres as minhas opções de arquitetura e projetos de engenharia."
             </p>
           </div>
 
@@ -728,7 +729,7 @@ export default function App() {
               Pedro Braz
             </h1>
             <p className="text-xs font-mono text-manga-accent-blue font-bold uppercase mt-0.5 tracking-wider flex items-center gap-1.5">
-              <span>&lt;</span> Software Engineer &amp; Full-Stack Builder <span>/&gt;</span>
+              <span>&lt;</span> Junior Software Engineer &amp; Full-Stack Builder <span>/&gt;</span>
             </p>
           </div>
 
